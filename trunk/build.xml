@@ -1,0 +1,64 @@
+<project name="idswrapper" default="dist" basedir=".">
+	<description>IDSWrapper</description>
+
+	<property name="version" value="1.0" />
+	<property name="src" location="src" />
+	<property name="build" location="build" />
+	<property name="doc" location="javadoc" />
+	<property name="dist" location="dist" />
+	<property name="debug" value="true" />
+	
+	<target name="init">
+		<tstamp />
+	</target>
+	
+	<target name="compile" depends="init" description="Build">
+		<mkdir dir="${build}" />
+		<javac srcdir="${src}" destdir="${build}" classpath="${libs}" debug="${debug}">
+			<classpath>
+				<pathelement path="${classpath}" />
+				<fileset dir="lib">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="dist" depends="compile" description="Generate JAR distribution">
+		<mkdir dir="${dist}" />
+		<manifestclasspath property="jar.classpath" jarfile="${dist}/idswrapper.jar">
+			<classpath>
+				<pathelement path="${classpath}" />
+				<fileset dir="lib">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</manifestclasspath>
+
+		<manifest file="${src}/MANIFEST.MF">
+			<attribute name="Manifest-Version" value="${version}" />
+			<attribute name="Main-Class" value="it.polimi.elet.vplab.idswrapper.Main" />
+			<attribute name="Class-Path" value="${jar.classpath}"/>
+		</manifest>
+
+		<jar jarfile="${dist}/idswrapper.jar" basedir="${build}" manifest="${src}/MANIFEST.MF"/>
+	</target>
+
+	<target name="doc" description="Generate documentation">
+		<mkdir dir="${doc}" />
+		<javadoc packagenames="it.polimi.elet.vplab.idswrapper.*" destdir="${doc}" source="1.6"
+			author="true" version="true">
+
+			<sourcepath>
+				<pathelement path="${src}" />
+			</sourcepath>
+		</javadoc>
+	</target>
+
+	<target name="clean" description="clean workspace">
+		<delete file="${src}/MANIFEST.MF" />
+		<delete dir="${doc}" />
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+	</target>
+</project>
