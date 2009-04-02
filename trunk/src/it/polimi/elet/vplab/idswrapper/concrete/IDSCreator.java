@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /*
- * Questa classe viene richiamata dall'interfaccia IDSSelectionInterface e deve essere modificata al momento
- * dell'introduzione di un nuovo IDS. In particolare l'aggiunta va introdotta nel metodo "createIDSIstance"
+ * This class is called from IDSSelectionInterface interface. If you're going to add a new IDS it is necessary to 
+ * modify the method "createIDSIstance" of this class.
  */
 
 @SuppressWarnings({"unchecked"})
