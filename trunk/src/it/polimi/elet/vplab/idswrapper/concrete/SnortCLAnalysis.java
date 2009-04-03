@@ -18,7 +18,7 @@ public class SnortCLAnalysis
 		
 	}
 	
-	//	traduce i tag generici della commandLineTagList nei parametri usabili da Snort
+	//	This method translate the generic tags of the commandLineTagList into snort parameters 
 	@SuppressWarnings("unchecked")
 	public void updateCommandLine(ArrayList commandLineTagList)
 	{
@@ -26,7 +26,7 @@ public class SnortCLAnalysis
 		
 		clTokens.add("snort");
 		
-		//	Controllo che vi siano delle opzioni sulle modalità di report dei risultati in posizione 1
+		//	Control of the options about modalities of report (position 1)
 		ArrayList reportModeArray = (ArrayList)(commandLineTagList.get(1));
 		if( reportModeArray.size() != 0)
 		{
@@ -39,15 +39,15 @@ public class SnortCLAnalysis
 				else if(reportModeArray.get(i).equals("verbose_info"))
 					clTokens.add(" -v");
 				
-				//	AGGIUNGERE QUI EVENTUALI ALTRE MODALITÀ DI VISUALIZZAZIONE PER SNORT	
+				//	TO ADD HERE EVENTUAL OTHER MODALITIES OF VISUALIZATION FOR SNORT
 			}
 		}
 		
-		//	Inserisco nella CL il riferimento al logfile (se presente)
+		//	Add into CL the reference to logfile (if present)
 		if(!commandLineTagList.get(2).equals(""))
 			clTokens.add(" -l "+ commandLineTagList.get(2));
 		
-		//	Controllo che vi siano delle opzioni sulle modalità di alert in posizione 3
+		//	Control of the options about modalities of alert (position 3)
 		ArrayList alertList = (ArrayList)commandLineTagList.get(3);
 		String alertModeArray = (String)alertList.get(0);
 		if(!alertModeArray.equals(""))
@@ -64,8 +64,9 @@ public class SnortCLAnalysis
 				clTokens.add(" -A cmg");
 			else if(alertModeArray.equals("no_alert"))
 				clTokens.add(" -A none");
-				
-			//	AGGIUNGERE QUI EVENTUALI ALTRE MODALITÀ DI ALERT PER SNORT	
+			
+			//	TO ADD HERE EVENTUAL OTHER MODALITIES OF ALERT FOR SNORT
+
 		}
 		if(((String)alertList.get(1)).equals("binary_format_log"))
 			clTokens.add(" -b");
@@ -74,21 +75,20 @@ public class SnortCLAnalysis
 		if(((String)alertList.get(3)).equals("no_log"))
 			clTokens.add(" -N");
 		
-		//	Inserisco nella CL la specifica della classe di pacchetti da analizzare (se specificata)
+		//	Insert into CL the specific of the class of packets to analyze
 		if(!commandLineTagList.get(4).equals(""))
 			clTokens.add(" -h "+ commandLineTagList.get(4));
 		
-		//	Inserisco nella CL la posizione del file delle regole
+		//	Insert into CL the path of the rules file
 		if(!commandLineTagList.get(5).equals(""))
 			clTokens.add(" -c "+ commandLineTagList.get(5));
 			
-		//	Inserisco nella CL la posizione del file tcpdump da analizzare (se specificata)
+		//	Insert into CL the path of the tcpdump file to analyze
 			if(!commandLineTagList.get(6).equals(""))
 				clTokens.add(" -r "+ commandLineTagList.get(6));
 		
 	}
 	
-	//	Restituisce la stringa testuale della command line
 	public String getTextualCL()
 	{
 		String strOut = "";
@@ -107,10 +107,10 @@ public class SnortCLAnalysis
 	
 	private void initializeCLFeature()
 	{
-		//	Questo ArrayList di String contiene i tag corrispondenti alle funzionalità di snort, che verranno
-		//	controllate dall'interfaccia grafica per abilitare o meno i checkbox per la formazione della CommandLine
-		//	se un IDS non dovesse avere certe funzionalità, queste risultarebbero non selezionabili a livello di
-		//	interfaccia
+		/*	This ArrayList<String> contains the tags linked with the snort's features. The GUI will check the elements 
+		 * 	of the array to enable the checkbox that are used to create the CommandLine for the specific IDS
+		*/
+		
 		CLFeatures = new ArrayList<String>();
 		CLFeatures.add("dump_app_layer");
 		CLFeatures.add("show_second_layer");
@@ -127,16 +127,4 @@ public class SnortCLAnalysis
 		
 	}
 	
-	
-/*	//	questo metodo attiva l'attività di analisi		NO, VA NELL'IDS, NON QUI
-	public void analize()
-	{
-		
-	}/*
-	
-	/*public String analize(String alertMode, String configurationFile, String displayMode, String logFile, String networkInterface, String tcpdumpFile)
-	{
-		
-		return("");
-	}*/
 }
