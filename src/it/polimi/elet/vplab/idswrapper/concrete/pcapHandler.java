@@ -8,7 +8,7 @@ public class pcapHandler
 	public pcapHandler()
 	{
 		handlerName = "pcap Handler";
-		handlerType = "Gestisco i file pcap";
+		handlerType = "Handle pcap files";
 		
 		System.out.println(handlerName+"   "+handlerType);
 	}
