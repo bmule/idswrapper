@@ -2,9 +2,11 @@ package it.polimi.elet.vplab.idswrapper.concrete;
 
 import java.util.ArrayList;
 
-//	Questa classe gestisce la commandLineTagList, ossia la struttura dati che serve per fare da tramite 
-//	tra le caratteristiche selezionate dall'utente dell'interfaccia (generica) e la reale CL creata dall'IDS istanziato
-//	(specifico).
+
+/*	This class manages the commandLineTagList, a data structure that lets you to link the features selected by the user 
+ * on the generic interface and the "real" command line of the specific IDS
+ * 
+ */
 
 @SuppressWarnings({"unchecked"})
 public class TagListAnalysis 
@@ -16,7 +18,7 @@ public class TagListAnalysis
 	
 	public ArrayList inizializeCommandLineTagList()
 	{
-		//	Inizializzo commandLineTagList: inserisco stringhe e vettori vuoti: poi li modificherò
+		//	Inizialize commandLineTagList
 		commandLineTagSubListVisualOptions = new ArrayList();
 		commandLineTagSubListVisualOptions.add("");
 		commandLineTagSubListVisualOptions.add("");
@@ -42,7 +44,7 @@ public class TagListAnalysis
 	
 	public ArrayList updteCommandLineTagList(int position, String data)
 	{
-		//	La posizione 1 dell'ArrayList è un ArrayList di String e va trattato in modo differente
+		//	The position 1 is different!
 		
 		if(position == 1)
 		{
