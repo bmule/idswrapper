@@ -57,7 +57,7 @@ public class SnortRM
 				{
 					if(getLastTwoChars(line).equals(";)"))
 					{
-						//	In questo caso abbiamo una regola completa su un'unica linea
+						//	In this case there's a complete rule on a unique line
 						rulesList.add(line);
 					}
 					else
@@ -82,12 +82,6 @@ public class SnortRM
 				}
 			}
 		}
-		
-/*for(int i = 0; i < rulesList.size(); i++)
-{
-	System.out.println(rulesList.get(i));
-}
-System.out.println("Numero di regole: "+rulesList.size());*/
 		
 		return rulesList;
 	}
@@ -176,12 +170,5 @@ System.out.println("Numero di regole: "+rulesList.size());*/
 		return "";
 	}
 	
-	public static void main(String[] args) 
-	{
-		SnortRM srm = new SnortRM();
-		
-		srm.loadRules("/usr/local/snort-2.3.2/rules/telnet.rules");
-	//	srm.getLastChar("sss aa ;  ");
-	}
 }
 
