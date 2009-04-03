@@ -5,7 +5,8 @@ import it.polimi.elet.vplab.idswrapper.concrete.IDSWrapper;
 /**
  * Main class.
  *
- * @author Federico Maggi
+ * @author $Author$
+ * @version $Id$
  * */
 public class Main
 {
