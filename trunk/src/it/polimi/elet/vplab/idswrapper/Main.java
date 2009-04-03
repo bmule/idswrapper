@@ -4,11 +4,15 @@ import it.polimi.elet.vplab.idswrapper.concrete.IDSWrapper;
 
 /**
  * Main class.
+ *
+ * @author Federico Maggi
  * */
 public class Main
 {
 	/**
-	 * Main.
+	 * Launches the IDSWrapper GUI.
+	 *
+	 * @param args Command line arguments are ignored.
 	 */
 	public static void main(String[] args)
 	{

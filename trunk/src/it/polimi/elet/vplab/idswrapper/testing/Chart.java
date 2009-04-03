@@ -11,18 +11,18 @@ import org.jfree.chart.renderer.xy.*;
 
 
 /**
- * 
- * This class plots the ROC curve.<br />
+ * This class plots the ROC curve.
+ *
  * You just have to provide any number of series (double[2][*]), it will display 
  * a line for every series. Different parameters can be set to change the 
  * appearance pf the chart.
  * 
  * @author Claudio Magni
- * @version 1.0
  * 
  ******************************************************************************/
 
-public class Chart extends JFrame {
+public class Chart
+	extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -100,13 +100,19 @@ public class Chart extends JFrame {
 		
 		// Modify curve appearance
 		for (int i = 0; i < num; i++) {
-			// Let's use 4 types of strokes for now
 			int mod = i % 4;
 			switch (mod) {
-			case 1: render.setSeriesStroke(i, stroke1, true); break;
-			case 2: render.setSeriesStroke(i, stroke2, true); break;
-			case 3: render.setSeriesStroke(i, stroke3, true); render.setSeriesPaint(i, color4); break;
-			default: break;
+				case 1:
+					render.setSeriesStroke(i, stroke1, true);
+					break;
+				case 2:
+					render.setSeriesStroke(i, stroke2, true);
+					break;
+				case 3:
+					render.setSeriesStroke(i, stroke3, true); render.setSeriesPaint(i, color4);
+					break;
+				default:
+					break;
 			}
 		}
 	}
@@ -116,17 +122,11 @@ public class Chart extends JFrame {
 	 */
 	public void draw ()
 	{	
-		
 		plot = new XYPlot(data, domain, range, render);
-		
 		chart = new JFreeChart(title, font1, plot, true);
-		
 		chart.getLegend().setItemFont(font2);
-		
 		cpanel = new ChartPanel(chart);
-		
 		panel.add(cpanel);
-		
 		setSize(700,600);
 		setVisible(true);
 	}

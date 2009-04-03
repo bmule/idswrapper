@@ -1,14 +1,14 @@
 package it.polimi.elet.vplab.idswrapper.testing;
 
 /**
- * 
  * Implements Entity interface.
+ * 
  * In particular this is for the truth file of DARPA Dataset. It allows to keep
  * an attack in memory.
  * 
  * @author Claudio Magni
  * 
- ******************************************************************************/
+ */
 
 public class Attack
 	extends Entity {
@@ -16,12 +16,25 @@ public class Attack
 	private String[] targetIP;
 	private long[] time;
 	private int[] duration;
-	
+
+	/**
+	 * Empty constructor.
+	 */
 	public Attack()
 	{
 		super();
 	}
-	
+
+	/**
+	 * Construct a new attack object.
+	 *
+	 * @param id The ID of the attack.
+	 * @param name A name associated to the attack.
+	 * @param targetIP The victim's IP.
+	 * @param time Timestamp of the attack event (beginning).
+	 * @param duration The duration, in seconds, of the attack.
+	 *
+	 */
 	public Attack(String id, String name, String[] targetIP, long[] time, int[] duration)
 	{
 		this.id = id;
@@ -30,33 +43,72 @@ public class Attack
 		this.name = name;
 		this.targetIP = targetIP;
 	}
-	
-	public long[] getTime() {
+
+	/**
+	 * Get time.
+	 *
+	 * @return timestamp.
+	 */
+	public long[] getTime()
+	{
 		return time;
 	}
 	
-	public String[] getTargetIP() {
+	/**
+	 * Get the victim IP.
+	 *
+	 * @return the victim IP.
+	 */
+	public String[] getTargetIP()
+	{
 		return targetIP;
 	}
 	
-	public int[] getDuration() {
+	/**
+	 * Get the duration of the attack.
+	 *
+	 * @return duration.
+	 */
+	public int[] getDuration()
+	{
 		return duration;
 	}
-
 	
-	public void setTime(long[] timestamp) {
+	/**
+	 * Set the timestamp (beginning).
+	 *
+	 * @param timestamp Timestamp of the attack event (beginning).
+	 */
+	public void setTime(long[] timestamp)
+	{
 		this.time = timestamp;
 	}
 	
-	public void setTargetIP(String[] ip) {
+	/**
+	 * Set the victim IP.
+	 *
+	 * @param targetIP The victim's IP address.
+	 */
+	public void setTargetIP(String[] ip)
+	{
 		this.targetIP = ip;
 	}
 	
-	public void setDuration(int[] duration) {
+	/**
+	 * Set the duration.
+	 *
+	 * @param duration.
+	 */
+	public void setDuration(int[] duration)
+	{
 		this.duration = duration;
 	}
 	
-	
+	/**
+	 * Returns a string representation of the alert.
+	 *
+	 * @return a string representation of the alert.
+	 */
 	public String toString()
 	{
 		String buffer = "";
