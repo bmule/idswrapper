@@ -40,7 +40,7 @@ public class Snort extends IDS
 	
 	public void analizeTraffic()
 	{
-		//	Creazione di un vettore di String a partire dalla CL presente nell'attributo dell'IDS
+		//	Create a String[] from the command line attribute
 System.out.println("La command line che eseguirà l'IDS è: "+this.commandLineAnalysis.getTextualCL());
 		String[] cmd;
 		int token_number = 0;
@@ -59,11 +59,10 @@ System.out.println("La command line che eseguirà l'IDS è: "+this.commandLineAn
 			cmd[k] = strToken.nextToken();
 			k++;
 		}
-		
-		//	Lancio dell'attività di analisi
+
+		//	Start of the analysis activity
 		try
         {            
-		//	String cmd = this.commandLine.getTextualCL();
 			Process analisysProgess;
 			analisysProgess = Runtime.getRuntime().exec(cmd);
 			
@@ -83,27 +82,5 @@ System.out.println("La command line che eseguirà l'IDS è: "+this.commandLineAn
             t.printStackTrace();
           }
 	}
-	
-	/*public void configureIDS()
-	{
-		try
-        {            
-			String[] cmd = {"snort", "-A", "fast", "-k", "ascii", "-l", "/var/log/snort", "-i", "any"};
-			Runtime.getRuntime().exec(cmd);
-			System.out.println("lanciato...");
-        } catch (Throwable t)
-          {
-        	System.out.println("ERRORE");
-            t.printStackTrace();
-          }
-	}*/
-	
-	/*public static void main(String[] args)
-	{
-		System.out.println("Provo a lanciare snort...");
-		Snort snort = new Snort();
-		snort.configureIDS();
-		System.out.println("Allegria....");
-	}*/
 	
 }
