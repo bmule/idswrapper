@@ -2,6 +2,7 @@ package it.polimi.elet.vplab.idswrapper;
 
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+import java.io.IOException;
 
 import it.polimi.elet.vplab.idswrapper.concrete.IDSWrapper;
 import it.polimi.elet.vplab.idswrapper.config.Options;
