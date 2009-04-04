@@ -1,3 +1,28 @@
+/*
+ * $Id$
+ *
+ * $Revision$
+ *
+ * $Date$
+ * 
+ * IDSWrapper - An extendable wrapping interface to manage, run your IDS and to
+ * evaluate its performances.
+ *
+ * Copyright (C) 2009 Davide Polino, Paolo Rigoldi, Federico Maggi. 
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package it.polimi.elet.vplab.idswrapper.testing;
 
 import java.util.*;
@@ -7,29 +32,28 @@ import org.jdom.output.*;
 import org.jdom.input.*;
 
 /**
- * 
- * Module to build a <b>IDMEF</b> message.<br />
+ * Module to build a <b>IDMEF</b> message.
+ *
  * IDMEF is an XML based protocol designed mainly for representing Intrusion 
- * Detection (ID) alert messages.
- * It has been designed for simplifying the task of translating a key-value based format to its idmef 
- * representation, which is the most common situation when writing a log export module for a given IDS software. 
- * A typical session involves the creation of a new IDMEF message, the initialisation of some of its fields 
- * and the addition of new IDMEF tags to this message.
- * Everything is handled through the DOM abstraction (-> not suitable for large files).
- * The possibility to output a IDMEF file is also provided.
+ * Detection (ID) alert messages. It has been designed for simplifying the task
+ * of translating a key-value based format to its IDMEF representation, which
+ * is the most common situation when writing a log export module for a given IDS
+ * software. A typical session involves the creation of a new IDMEF message, the
+ * initialisation of some of its fields and the addition of new IDMEF tags to this
+ * message. Everything is handled through the DOM abstraction (not suitable
+ * for large files).
+ *
+ * The possibility to output an IDMEF file is also provided.
  * 
  * @author Claudio Magni
- * @version 1.0, 2007-09-06
- * 
+ * @version $Id$
  */
-
-
 public class IDMEF {
-	
+
 	// TODO unique ids
 	// TODO ntpstamp (try to handle millisecs)
 	// TODO check DTD
-	
+
 	private Document doc;
 	// private DocType type; // Not used now
 	private Namespace nameSpace;
@@ -38,7 +62,7 @@ public class IDMEF {
 	private Element heartbeat;
 	private boolean openAlert = false;
 	private boolean openHeartbeat = false;
-	
+
 	/*
 	 * Variables needed to handle file
 	 */
@@ -47,8 +71,8 @@ public class IDMEF {
 	private FileInputStream fis;
 	private InputStreamReader isr;
 	private BufferedReader br;
-	
-	
+
+
 	/**
 	 * Creates a new empty IDMEF message.
 	 */
@@ -59,7 +83,7 @@ public class IDMEF {
 		root.addNamespaceDeclaration(nameSpace);
 		doc = new Document(root);
 	}
-	
+
 	/**
 	 * Creates a new IDMEF message from a file. File has to be correct XML.
 	 * 
@@ -84,7 +108,7 @@ public class IDMEF {
 		root = doc.getRootElement();
 		nameSpace = root.getNamespace();
 	}
-	
+
 	/*
 	 * Handle the adding of content
 	 */
@@ -92,7 +116,7 @@ public class IDMEF {
 		if (openAlert) alert.addContent(a);
 		else if (openHeartbeat) heartbeat.addContent(a);
 	}
-	
+
 	/*
 	 * Keep numbers in 2digit format, used for time handling
 	 */
@@ -102,8 +126,8 @@ public class IDMEF {
 		if (buffer.length() == 1) return "0" + buffer;
 		return buffer;
 	}
-	
-	
+
+
 	/**
 	 * Adds a new empty alert. The class is appended at the end of the message.
 	 */
@@ -125,7 +149,7 @@ public class IDMEF {
 		openAlert = false;
 		openHeartbeat = true;
 	}
-	
+
 	/**
 	 * Adds the Analyzer to last added class (alert or heartbeat).
 	 * 
@@ -150,46 +174,49 @@ public class IDMEF {
 			nm.setText(name);
 			node.addContent(nm);
 		}
-		
+
 		// Finally append the class to the document
 		if (category != null || location != null || name != null) {
 			analyzer.addContent(node);
-			
-		this.add(analyzer);
-			
+
+			this.add(analyzer);
+
 		}
 	}
-	
+
 	/**
 	 * Adds the time of creation of the last added class (alert or heartbeat).
 	 * 
 	 * @param timeStamp Timestamp in milliseconds from 1970 UTC.
 	 * @param timeZone The Timezone of the system.
 	 */
-	public void setCreateTime(long timeStamp, TimeZone timeZone) {
+	public void setCreateTime(long timeStamp, TimeZone timeZone)
+	{
 		this.setTime(timeStamp, timeZone, "CreateTime");
 	}
-	
+
 	/**
 	 * Adds the time of detection of the last added class (alert or heartbeat).
 	 * 
 	 * @param timeStamp Timestamp in milliseconds from 1970 UTC.
 	 * @param timeZone The Timezone of the system.
 	 */
-	public void setDetectTime(long timeStamp, TimeZone timeZone) {
+	public void setDetectTime(long timeStamp, TimeZone timeZone)
+	{
 		this.setTime(timeStamp, timeZone, "DetectTime");
 	}
-	
+
 	/*
 	 * Adds a Time class, whether CreateTime or DetectTime
 	 */
-	private void setTime(long timeStamp, TimeZone timeZone, String type) {
+	private void setTime(long timeStamp, TimeZone timeZone, String type)
+	{
 		Calendar calendar;
 		TimeZone zone;
 		if (timeZone == null) zone = TimeZone.getDefault();
 		else zone = timeZone;
 		calendar = new GregorianCalendar(zone);
-		
+
 		calendar.setTimeInMillis(timeStamp);
 		String value = "";
 		// Format: YYYY-MM-DDThh:mm:ss.ss+hh:mm
@@ -201,7 +228,7 @@ public class IDMEF {
 		value += handleZero(calendar.get(Calendar.MINUTE)) + ":";
 		value += handleZero(calendar.get(Calendar.SECOND));// + ".";
 		//value += calendar.get(Calendar.MILLISECOND);
-		
+
 		// Handle time zone
 		Integer offset = (zone.getRawOffset() / 3600000);
 		if (offset == 0) value += "Z";
@@ -210,15 +237,17 @@ public class IDMEF {
 			else if (offset < 0) value += "-";
 			value += handleZero(offset) + ":00";
 		}
-		
+
 		Element time = new Element(type, nameSpace);
-		
+
 		// Damn code for the ntpstamp format
 		Calendar temp = Calendar.getInstance();
 		temp.set(1900, 1, 1, 0, 0, 0); // this will be negative
-		String hex = Long.toHexString((- temp.getTimeInMillis() + timeStamp) / 1000 + 1000000000);
+		String hex = Long.toHexString((- temp.getTimeInMillis() + timeStamp) / 1000 +
+			1000000000);
 		String hex1 = hex;
 		String hex2 = "00000000";
+
 		if (hex.length() > 8) {
 			hex1 = hex.substring(0, 8);
 			hex2 = hex.substring(8, hex.length());
@@ -233,10 +262,10 @@ public class IDMEF {
 		hex2 = "0x" + hex2;
 		time.setAttribute("ntpstamp", hex1 + "." + hex2);
 		time.setText(value);
-		
+
 		this.add(time);
 	}
-	
+
 	/**
 	 * Adds source to the last added class (alert or heartbeat).
 	 * 
@@ -249,7 +278,7 @@ public class IDMEF {
 	{
 		this.setHost(true, address, name, location);
 	}
-	
+
 	/**
 	 * Adds target to the last added class (alert or heartbeat).
 	 * 
@@ -262,11 +291,12 @@ public class IDMEF {
 	{
 		this.setHost(false, address, name, location);
 	}
-	
+
 	/*
 	 * Adds source or target host
 	 */
-	private void setHost(boolean source, String address, String name, String location) {
+	private void setHost(boolean source, String address, String name, String location)
+	{
 		Element host;
 		if (source) {
 			host = new Element("Source", nameSpace);
@@ -275,7 +305,7 @@ public class IDMEF {
 		}
 		Element node = new Element("Node", nameSpace);
 		host.addContent(node);
-		
+
 		if (address != null) {
 			Element addr1 = new Element("Address", nameSpace);
 			Element addr2 = new Element("address", nameSpace);
@@ -294,66 +324,69 @@ public class IDMEF {
 			nm.setText(name);
 			node.addContent(nm);
 		}
-		
+
 		this.add(host);
 	}
-	
+
 	/**
 	 * Adds classification to the last added class (alert or heartbeat).
 	 * 
 	 * @param value The content of the classification.
 	 */
-	public void setClassification(String value) {
+	public void setClassification(String value)
+	{
 		if (value != null) {
 			Element classification = new Element("Classification", nameSpace);
 			classification.setAttribute("text", value);
-			
+
 			this.add(classification);		
 		}
 	}
-	
+
 	/**
 	 * Adds additional data to the last added class (alert or heartbeat).
 	 * 
 	 * @param meaning A string explaining how to interpret this info.
 	 * @param value The data itself.
 	 */
-	public void setAdditionalData(String meaning, String value) {
+	public void setAdditionalData(String meaning, String value)
+	{
 		Element add = new Element("AdditionalData", nameSpace);
 		add.setAttribute("meaning", meaning);
 		add.setText(value);
-		
+
 		this.add(add);
 	}
 
-	
+
 	/**
 	 * Returns a String representing the entire message (a well-formed XML).
 	 * 
 	 * @return The IDMEF message.
 	 */
-	public String getString() {
+	public String getString()
+	{
 		XMLOutputter outp = new XMLOutputter(Format.getPrettyFormat());
 		return outp.outputString(doc);
 	}
-	
+
 	/**
 	 * Store message into the xml file supplied.
 	 * 
 	 * @param path The path of the file to write.
 	 */
-	public void output(String path) {
+	public void output(String path)
+	{
 		File f = new File(path);
 		try {
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
-		
+
 			XMLOutputter outXML = new XMLOutputter(Format.getPrettyFormat());
 			outXML.output(doc, out);
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 
 }
