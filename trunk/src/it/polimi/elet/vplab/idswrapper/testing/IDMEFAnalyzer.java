@@ -1,3 +1,28 @@
+/*
+ * $Id$
+ *
+ * $Revision$
+ *
+ * $Date$
+ * 
+ * IDSWrapper - An extendable wrapping interface to manage, run your IDS and to
+ * evaluate its performances.
+ *
+ * Copyright (C) 2009 Davide Polino, Paolo Rigoldi, Federico Maggi. 
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package it.polimi.elet.vplab.idswrapper.testing;
 
 import java.util.*;
@@ -17,17 +42,14 @@ import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 
 /**
- * 
- * This class is used to compare two <b>IDMEF</b> messages/files to find the accuracy of the 
+ * This class is used to compare two IDMEF messages/files to find the accuracy of the 
  * Intrusion Detection System that generated the alerts. The results are indexes of the accuracy:
  * True Positives, True Negatives, False Positives, False Negatives. They are necessary to build 
- * a <b>ROC</b> curve.
+ * a ROC curve.
  * 
  * @author Claudio Magni
- * @version 1.0
- *
+ * @version $Id$
  */
-
 public class IDMEFAnalyzer {
 	
 	/*
@@ -60,14 +82,13 @@ public class IDMEFAnalyzer {
 	private int tn		= 0;
 	private int numSeq 	= 1;
 	
-	
 	/**
 	 * Creates a new instance of Analyzer
 	 */
-	public IDMEFAnalyzer () {
+	public IDMEFAnalyzer ()
+	{
 		super();
 	}
-	
 	
 	/**
 	 * Sets the path of the truth file to analyze. It has to be a well-formed
@@ -77,7 +98,8 @@ public class IDMEFAnalyzer {
 	 * @throws JDOMException 
 	 * @throws IOException
 	 */
-	public void setTruthFile(String path) {
+	public void setTruthFile(String path)
+	{
 		truthFile = path;
 		readTruth(truthFile);
 	}
@@ -88,7 +110,8 @@ public class IDMEFAnalyzer {
 	 * 
 	 * @param number Number of sequencies
 	 */
-	public void setNumSeq(int number) {
+	public void setNumSeq(int number)
+	{
 		numSeq = number;
 	}
 	
@@ -100,13 +123,14 @@ public class IDMEFAnalyzer {
 	 * @throws JDOMException 
 	 * @throws IOException
 	 */
-	public void setAlertFile(String path) {
+	public void setAlertFile(String path)
+	{
 		alertFile = path;
 		readAlert(alertFile);
 	}
 	
 	/**
-	 * This is the real <b>THING</b>. It compares the two IDMEF files and stores useful 
+	 * This is the real thing. It compares the two IDMEF files and stores useful 
 	 * infos about this test.
 	 * 
 	 * @throws JDOMException If IDMEF files aren't correct.
@@ -121,27 +145,22 @@ public class IDMEFAnalyzer {
 			// Get the list of alerts in alert file
 			List<Element> alerts = alertRoot.getChildren("Alert", alertNameSpace);
 			int numAlerts = alerts.size();
-			if (numAlerts == 0) throw new JDOMException("Empty or malformed IDMEF document");
+
+			if (numAlerts == 0)
+				throw new JDOMException("Empty or malformed IDMEF document");
 			
 			for (int i = 0; i < numAlerts; i++) {
 				// Get the list of alerts in truth file
 				List<Element> truths = truthRoot.getChildren("Alert", truthNameSpace);
 				int numTruths = truths.size();
-				if (numTruths == 0) throw new JDOMException("Empty or malformed IDMEF document");
+				if (numTruths == 0)
+					throw new JDOMException("Empty or malformed IDMEF document");
 				
 				boolean found = false;
 				
 				// First search the hit list
 				for (int k = 0; k < numHits; k++) {
 					if (same(alerts.get(i), hits.get(k))) {
-						// Hooah! Alert is correct, but it is for an attack already detected. Do nothing
-
-						/* This is for debug
-						System.out.println("Hooah!");
-						System.out.println(alerts.get(i).getChild("CreateTime", alertNameSpace).getText());
-						System.out.println(truths.get(j).getChild("CreateTime", truthNameSpace).getText());
-						*/
-
 						found = true;
 						break;
 					}
@@ -153,10 +172,11 @@ public class IDMEFAnalyzer {
 						// Hooah! Alert is correct, good job ids.
 						tp++;
 						
-						
 						System.out.println("\nHooah!");
-						System.out.println(alerts.get(i).getChild("CreateTime", alertNameSpace).getText());
-						System.out.println(truths.get(j).getChild("CreateTime", truthNameSpace).getText());
+						System.out.println(alerts.get(i).getChild("CreateTime",
+							alertNameSpace).getText());
+						System.out.println(truths.get(j).getChild("CreateTime",
+							truthNameSpace).getText());
 						
 						
 						// Add the attack to the hits and remove from truths
@@ -167,7 +187,9 @@ public class IDMEFAnalyzer {
 						break;
 					}
 				}
-				if (!found)	fp++;
+
+				if (!found)
+					fp++;
 			}
 			
 			// Finished. We can finally check for False Negatives and True Negatives
@@ -179,19 +201,43 @@ public class IDMEFAnalyzer {
 		}
 	}
 	
-	/*
-	 * Get all info about the result
+	/**
+	 * Get the number of true positive alerts.
+	 *
+	 * @return True Positives.
 	 */
-	public int getTP() {
+	public int getTP()
+	{
 		return tp;
 	}
-	public int getFP() {
+	
+	/**
+	 * Get the number of falsepositive alerts.
+	 *
+	 * @return False Positives.
+	 */
+	public int getFP()
+	{
 		return fp;
 	}
-	public int getFN() {
+
+	/**
+	 * Get the number of false negative alerts.
+	 *
+	 * @return False Negative
+	 */
+	public int getFN()
+	{
 		return fn;
 	}
-	public int getTN() {
+
+	/**
+	 * Get the number of true negative alerts.
+	 *
+	 * @return True Negative
+	 */
+	public int getTN()
+	{
 		return tn;
 	}
 	
@@ -201,30 +247,36 @@ public class IDMEFAnalyzer {
 	 * 
 	 * @return Number of sequences.
 	 */
-	public int getNumSeq() {
+	public int getNumSeq()
+	{
 		return numSeq;
 	}
+
 	/**
 	 * Returns the True Positive Rate (TPR) of the test performed by 
-	 * {@link jidstest.IDMEFAnalyzer#compare()}. <br />
+	 * {@link IDMEFAnalyzer#compare()}.
+	 *
 	 * TPR is calculated as follows: tpr = tp / (tp + fn). 
 	 * It represents the sensitivity.
 	 * 
 	 * @return The TPR as a float.
 	 */
-	public float getTPR() {
+	public float getTPR()
+	{
 		float tpr = (float)tp / (float)(tp + fn);
 		return tpr * 100;
 	}
+
 	/**
 	 * Returns the False Positive Rate (FPR) of the test performed by 
-	 * {@link jidstest.IDMEFAnalyzer#compare()}. <br />
+	 * {@link IDMEFAnalyzer#compare()}. <br />
 	 * FPR is calculated as follows: fpr = fp / (fp + tn). 
 	 * It represents the opposite of the specificity.
 	 * 
 	 * @return The TPR as a float.
 	 */
-	public float getFPR() {
+	public float getFPR()
+	{
 		float fpr = (float)fp / (float)(fp + tn);
 		return fpr * 100;
 	}
@@ -234,50 +286,45 @@ public class IDMEFAnalyzer {
 	 * Equals if they have same Time and Target Address
 	 */
 	@SuppressWarnings("unchecked")
-	private boolean same(Element alert, Element truth) {
+	private boolean same(Element alert, Element truth)
+	{
 		try {
 			Element alertTimeNode = alert.getChild("CreateTime", alertNameSpace);
 			Element truthTimeNode = truth.getChild("CreateTime", truthNameSpace);
+
 			if (alertTimeNode == null || truthTimeNode == null) 
 				throw new JDOMException("Malformed IDMEF document: no CreateTime");
+
 			List<Element> truthData = truth.getChildren("AdditionalData", truthNameSpace);
 			String duration = "0";
-			for (int i = 0; i < truthData.size(); i++) {
-				if (truthData.get(i).getAttributeValue("meaning") != null) {
+
+			for (int i = 0; i < truthData.size(); i++)
+				if (truthData.get(i).getAttributeValue("meaning") != null)
 					if (truthData.get(i).getAttributeValue("meaning").equals("duration"))
 						duration = truthData.get(i).getTextTrim();
-				}
-			}
+
 			String alertTime = alertTimeNode.getTextNormalize();
 			String truthTime = truthTimeNode.getTextNormalize();
 			
 			if (sameTime(alertTime, truthTime, duration)) {
-				/*
-				Element alertAddr = alert.getChild("Source", alertNameSpace).getChild("Node", alertNameSpace).getChild("Address", alertNameSpace).getChild("address", alertNameSpace);
-				Element truthAddr = truth.getChild("Source", truthNameSpace).getChild("Node", truthNameSpace).getChild("Address", truthNameSpace).getChild("address", truthNameSpace);
-				if (alertAddr != null && truthAddr != null) {
-					// Damn we cannot rely on source address cause it isn't supplied in
-					// IDEVAL truth files... idiots...
-					// Let's just go on
-					// throw new JDOMException("Malformed IDMEF document: no Source address");
-					String alertSource = alertAddr.getTextNormalize();
-					String truthSource = truthAddr.getTextNormalize();
-					if (!alertSource.equals(truthSource)) return false;
-				}
-				*/
-				Element alertTrg = alert.getChild("Target", alertNameSpace).getChild("Node", alertNameSpace).getChild("Address", alertNameSpace).getChild("address", alertNameSpace);
-				Element truthTrg = truth.getChild("Target", truthNameSpace).getChild("Node", truthNameSpace).getChild("Address", truthNameSpace).getChild("address", truthNameSpace);
+				Element alertTrg = alert.getChild("Target", alertNameSpace).
+					getChild("Node", alertNameSpace).
+					getChild("Address", alertNameSpace).
+					getChild("address", alertNameSpace);
+
+				Element truthTrg = truth.getChild("Target", truthNameSpace).
+					getChild("Node", truthNameSpace).
+					getChild("Address", truthNameSpace).
+					getChild("address", truthNameSpace);
+
 				if (alertTrg == null || truthTrg == null) 
 					throw new JDOMException("Malformed IDMEF document: no Target address");
 				
 				String alertTarget = alertTrg.getTextNormalize();
 				String truthTarget = truthTrg.getTextNormalize();
 				
-				if (sameIP(alertTarget, truthTarget)) {
-					// Hooah! Alert is correct, good job ids.
+				if (sameIP(alertTarget, truthTarget))
 					return true;
-				}
-				
 			}
 		} catch (JDOMException e) {
 			e.printStackTrace();
@@ -289,7 +336,8 @@ public class IDMEFAnalyzer {
 	/*
 	 * Returns whether 2 ips are equal.
 	 */
-	private boolean sameIP(String ip1, String ip2) {
+	private boolean sameIP(String ip1, String ip2)
+	{
 		try {
 			int[] n1 = new int[4];
 			int[] n2 = new int[4];
@@ -297,30 +345,34 @@ public class IDMEFAnalyzer {
 			Pattern p = Pattern.compile(regex);
 			Matcher m;
 			
-			m = p.matcher( ip1 );
+			m = p.matcher(ip1);
 			if (!m.matches()) {
 				System.out.println(ip1);
 				System.out.println(" ");
+
 				throw new JDOMException("Malformed IDMEF document: bad ip String");
 			}
-			for (int i = 0; i < n1.length; i++) {
-				n1[i] = Integer.parseInt(m.group(i+1).trim());
-			}
-			
-			m = p.matcher( ip2 );
-			if (!m.matches()) throw new JDOMException("Malformed IDMEF document: bad ip String");
-			for (int i = 0; i < n1.length; i++) {
-				n2[i] = Integer.parseInt(m.group(i+1).trim());
-			}
 
-			for (int i = 0; i < n1.length; i++) {
-				if (n1[i] != n2[i]) return false;
-			}
+			for (int i = 0; i < n1.length; i++)
+				n1[i] = Integer.parseInt(m.group(i+1).trim());
+			
+			m = p.matcher(ip2);
+
+			if (!m.matches())
+				throw new JDOMException("Malformed IDMEF document: bad ip String");
+			
+			for (int i = 0; i < n1.length; i++)
+				n2[i] = Integer.parseInt(m.group(i+1).trim());
+
+			for (int i = 0; i < n1.length; i++)
+				if (n1[i] != n2[i])
+					return false;
 
 			return true;
 		} catch (JDOMException e) {
 			e.printStackTrace();
 		}
+
 		return false;
 	}
 	
@@ -329,7 +381,8 @@ public class IDMEFAnalyzer {
 	 * I really hate this sloppy method, but hell I can't find a better way.
 	 * These files are just shit!
 	 */
-	private boolean sameTime(String alert, String truth, String duration) {
+	private boolean sameTime(String alert, String truth, String duration)
+	{
 		try {
 			long millisecs = Long.parseLong(duration);
 			// Format: YYYY-MM-DDThh:mm:ss.ss+hh:mm
@@ -340,8 +393,9 @@ public class IDMEFAnalyzer {
 			Matcher m;
 			
 			m = p.matcher( alert );
-			if (!m.matches()) throw new JDOMException("Malformed IDMEF document: bad time String");
-			//String s1 = m.group(0);
+			if (!m.matches())
+				throw new JDOMException("Malformed IDMEF document: bad time String");
+
 			int alertYear = Integer.parseInt(alert.substring(0, 4));
 			int alertMonth = Integer.parseInt(alert.substring(5, 7));
 			int alertDay = Integer.parseInt(alert.substring(8, 10));
@@ -349,12 +403,11 @@ public class IDMEFAnalyzer {
 			int alertMin = Integer.parseInt(alert.substring(14, 16));
 			int alertSec = Integer.parseInt(alert.substring(17, 19));
 			
-			//System.out.println(alertYear+"-"+alertMonth+"-"+alertDay+"T"+
-			//		alertHour+":"+alertMin+":"+alertSec+"Z");
-			
 			m = p.matcher( truth );
-			if (!m.matches()) throw new JDOMException("Malformed IDMEF document: bad time String");
-			//String s2 = m.group(1);
+
+			if (!m.matches())
+				throw new JDOMException("Malformed IDMEF document: bad time String");
+
 			int truthYear = Integer.parseInt(truth.substring(0, 4));
 			int truthMonth = Integer.parseInt(truth.substring(5, 7));
 			int truthDay = Integer.parseInt(truth.substring(8, 10));
@@ -386,6 +439,7 @@ public class IDMEFAnalyzer {
 		} catch (JDOMException e) {
 			e.printStackTrace();
 		}
+
 		return false;
 	}
 	
@@ -393,7 +447,8 @@ public class IDMEFAnalyzer {
 	 * Reads a file into a DOM document
 	 * Truth file version
 	 */
-	private void readTruth(String path) {
+	private void readTruth(String path)
+	{
 		f = new File(path);
 		try {
 			fis = new FileInputStream(f);
@@ -414,8 +469,10 @@ public class IDMEFAnalyzer {
 	 * Reads a file into a DOM document
 	 * Alert file version
 	 */
-	private void readAlert(String path) {
+	private void readAlert(String path)
+	{
 		f = new File(path);
+
 		try {
 			fis = new FileInputStream(f);
 			isr = new InputStreamReader(fis);
@@ -426,7 +483,8 @@ public class IDMEFAnalyzer {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
+
 		alertRoot = alertDoc.getRootElement();
 		alertNameSpace = alertRoot.getNamespace();
 	}

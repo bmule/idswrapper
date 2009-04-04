@@ -1,3 +1,28 @@
+/*
+ * $Id$
+ *
+ * $Revision$
+ *
+ * $Date$
+ * 
+ * IDSWrapper - An extendable wrapping interface to manage, run your IDS and to
+ * evaluate its performances.
+ *
+ * Copyright (C) 2009 Davide Polino, Paolo Rigoldi, Federico Maggi. 
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package it.polimi.elet.vplab.idswrapper.concrete;
 
 import it.polimi.elet.vplab.idswrapper.ids.CommandLineAnalysis;
@@ -17,7 +42,8 @@ public class UlisseCLAnalysis
 		
 	}
 	
-	//	traduce i tag generici della commandLineTagList nei parametri usabili da Snort
+	//	traduce i tag generici della commandLineTagList nei parametri usabili
+	//	da Snort
 	@SuppressWarnings("unchecked")
 	public void updateCommandLine(ArrayList commandLineTagList)
 	{
@@ -25,65 +51,64 @@ public class UlisseCLAnalysis
 		
 		clTokens.add("snort");
 		
-		//	Controllo che vi siano delle opzioni sulle modalità di report dei risultati in posizione 1
+		//	Controllo che vi siano delle opzioni sulle modalità di report dei
+		//	risultati in posizione 1
 		ArrayList reportModeArray = (ArrayList)(commandLineTagList.get(1));
-		if( reportModeArray.size() != 0)
-		{
-			for(int i=0; i<reportModeArray.size(); i++)
-			{
-				if(reportModeArray.get(i).equals("dump_app_layer"))
+		if ( reportModeArray.size() != 0) {
+			for(int i = 0; i < reportModeArray.size(); i++) {
+				if (reportModeArray.get(i).equals("dump_app_layer"))
 					clTokens.add(" -d");
-				else if(reportModeArray.get(i).equals("show_second_layer"))
+				else if (reportModeArray.get(i).equals("show_second_layer"))
 					clTokens.add(" -e");
-				else if(reportModeArray.get(i).equals("verbose_info"))
+				else if (reportModeArray.get(i).equals("verbose_info"))
 					clTokens.add(" -v");
-				
-				//	AGGIUNGERE QUI EVENTUALI ALTRE MODALITÀ DI VISUALIZZAZIONE PER SNORT	
 			}
 		}
 		
 		//	Inserisco nella CL il riferimento al logfile (se presente)
-		if(!commandLineTagList.get(2).equals(""))
+		if (!commandLineTagList.get(2).equals(""))
 			clTokens.add(" -l "+ commandLineTagList.get(2));
 		
-		//	Controllo che vi siano delle opzioni sulle modalità di alert in posizione 3
+		//	Controllo che vi siano delle opzioni sulle modalità di alert in
+		//	posizione 3
 		ArrayList alertList = (ArrayList)commandLineTagList.get(3);
 		String alertModeArray = (String)alertList.get(0);
-		if(!alertModeArray.equals(""))
-		{
-			if(alertModeArray.equals("full"))
+
+		if (!alertModeArray.equals("")) {
+			if (alertModeArray.equals("full"))
 				clTokens.add(" -A full");
-			else if(alertModeArray.equals("fast"))
+			else if (alertModeArray.equals("fast"))
 				clTokens.add(" -A fast");
-			else if(alertModeArray.equals("unsock"))
+			else if (alertModeArray.equals("unsock"))
 				clTokens.add(" -A unsock");
-			else if(alertModeArray.equals("console"))
+			else if (alertModeArray.equals("console"))
 				clTokens.add(" -A console");
-			else if(alertModeArray.equals("cmg"))
+			else if (alertModeArray.equals("cmg"))
 				clTokens.add(" -A cmg");
-			else if(alertModeArray.equals("no_alert"))
+			else if (alertModeArray.equals("no_alert"))
 				clTokens.add(" -A none");
-				
-			//	AGGIUNGERE QUI EVENTUALI ALTRE MODALITÀ DI ALERT PER SNORT	
 		}
-		if(((String)alertList.get(1)).equals("binary_format_log"))
+
+		if (((String)alertList.get(1)).equals("binary_format_log"))
 			clTokens.add(" -b");
-		if(((String)alertList.get(2)).equals("msg_to_syslog"))
+		if (((String)alertList.get(2)).equals("msg_to_syslog"))
 			clTokens.add(" -s");
-		if(((String)alertList.get(3)).equals("no_log"))
+		if (((String)alertList.get(3)).equals("no_log"))
 			clTokens.add(" -N");
 		
-		//	Inserisco nella CL la specifica della classe di pacchetti da analizzare (se specificata)
-		if(!commandLineTagList.get(4).equals(""))
+		//	Inserisco nella CL la specifica della classe di pacchetti da
+		//	analizzare (se specificata)
+		if (!commandLineTagList.get(4).equals(""))
 			clTokens.add(" -h "+ commandLineTagList.get(4));
 		
 		//	Inserisco nella CL la posizione del file delle regole
-		if(!commandLineTagList.get(5).equals(""))
+		if (!commandLineTagList.get(5).equals(""))
 			clTokens.add(" -c "+ commandLineTagList.get(5));
 			
-		//	Inserisco nella CL la posizione del file tcpdump da analizzare (se specificata)
-			if(!commandLineTagList.get(6).equals(""))
-				clTokens.add(" -r "+ commandLineTagList.get(6));
+		//	Inserisco nella CL la posizione del file tcpdump da analizzare (se
+		//	specificata)
+		if (!commandLineTagList.get(6).equals(""))
+			clTokens.add(" -r "+ commandLineTagList.get(6));
 		
 	}
 	
@@ -92,9 +117,7 @@ public class UlisseCLAnalysis
 	{
 		String strOut = "";
 		for(int i=0; i<clTokens.size(); i++)
-		{
 			strOut = strOut+clTokens.get(i);
-		}
 		
 		return strOut;
 	}
@@ -106,10 +129,12 @@ public class UlisseCLAnalysis
 	
 	private void initializeCLFeature()
 	{
-		//	Questo ArrayList di String contiene i tag corrispondenti alle funzionalità di snort, che verranno
-		//	controllate dall'interfaccia grafica per abilitare o meno i checkbox per la formazione della CommandLine
-		//	se un IDS non dovesse avere certe funzionalità, queste risultarebbero non selezionabili a livello di
-		//	interfaccia
+		//	Questo ArrayList di String contiene i tag corrispondenti alle
+		//	funzionalità di snort, che verranno controllate dall'interfaccia
+		//	grafica per abilitare o meno i checkbox per la formazione della
+		//	CommandLine se un IDS non dovesse avere certe funzionalità,
+		//	queste risultarebbero non selezionabili a livello di interfaccia
+
 		CLFeatures = new ArrayList<String>();
 		CLFeatures.add("dump_app_layer");
 		CLFeatures.add("show_second_layer");
@@ -126,16 +151,3 @@ public class UlisseCLAnalysis
 		
 	}
 }
-	
-	
-/*	//	questo metodo attiva l'attività di analisi		NO, VA NELL'IDS, NON QUI
-	public void analize()
-	{
-		
-	}/*
-	
-	/*public String analize(String alertMode, String configurationFile, String displayMode, String logFile, String networkInterface, String tcpdumpFile)
-	{
-		
-		return("");
-	}*/

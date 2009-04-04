@@ -1,3 +1,28 @@
+/*
+ * $Id$
+ *
+ * $Revision$
+ *
+ * $Date$
+ * 
+ * IDSWrapper - An extendable wrapping interface to manage, run your IDS and to
+ * evaluate its performances.
+ *
+ * Copyright (C) 2009 Davide Polino, Paolo Rigoldi, Federico Maggi. 
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package it.polimi.elet.vplab.idswrapper.gui;
 
 import it.polimi.elet.vplab.idswrapper.ids.IDS;
@@ -26,13 +51,16 @@ public class AnalysisInterfaceNetwork {
 	private Button browseTrafficFileButton;
 	private Button browseRuleFileButton;
 	private Text NetworkText;
+	
 	IDSWrapperVisualInterface mainInterface;
 	TestIDSInterface testInterface;
+
 	private Text CLPreviewText;
 	private Text TrafficFileText;
 	private Text rulesFileText;
 	private Text logFileText;
 	protected Shell shell;
+
 	Label IDSNameAndVersionLabel;
 	Button confirmLogSelectionButton;
 	Button confirmTrafficSelectionButton;
@@ -67,10 +95,10 @@ public class AnalysisInterfaceNetwork {
 		createContents();
 		shell.open();
 		shell.layout();
-		while (!shell.isDisposed()) {
+
+		while (!shell.isDisposed())
 			if (!display.readAndDispatch())
 				display.sleep();
-		}
 	}
 
 	/**
@@ -129,7 +157,7 @@ public class AnalysisInterfaceNetwork {
 		confirmLogSelectionButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(confirmLogSelectionButton.getSelection())
+				if (confirmLogSelectionButton.getSelection())
 				{
 					logFileText.setEnabled(false);
 					commandLineTagList.updteCommandLineTagList(2, logFileText.getText());
@@ -151,7 +179,7 @@ public class AnalysisInterfaceNetwork {
 		confirmTrafficSelectionButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(confirmTrafficSelectionButton.getSelection())
+				if (confirmTrafficSelectionButton.getSelection())
 				{
 					TrafficFileText.setEnabled(false);
 					commandLineTagList.updteCommandLineTagList(6, TrafficFileText.getText());
@@ -173,7 +201,7 @@ public class AnalysisInterfaceNetwork {
 		confirmRulesSelectionButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(confirmRulesSelectionButton.getSelection())
+				if (confirmRulesSelectionButton.getSelection())
 				{
 					rulesFileText.setEnabled(false);
 					commandLineTagList.updteCommandLineTagList(5, rulesFileText.getText());
@@ -204,7 +232,7 @@ public class AnalysisInterfaceNetwork {
 		confirmNetworkSelectionButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(confirmNetworkSelectionButton.getSelection())
+				if (confirmNetworkSelectionButton.getSelection())
 				{
 					NetworkText.setEnabled(false);
 					commandLineTagList.updteCommandLineTagList(4, NetworkText.getText());
@@ -229,7 +257,7 @@ public class AnalysisInterfaceNetwork {
 		        fd.setText("Select the Rules File");
 		        fd.setFilterPath(mainInterface.getIDS().getPath());
 		        String selected = fd.open();
-		        if(selected != null)
+		        if (selected != null)
 		        	rulesFileText.setText(selected);
 				
 			}
@@ -244,7 +272,7 @@ public class AnalysisInterfaceNetwork {
 				FileDialog fd = new FileDialog(shell, SWT.OPEN);
 		        fd.setText("Select the Traffic File");
 		        String selected = fd.open();
-		        if(selected != null)
+		        if (selected != null)
 		        	TrafficFileText.setText(selected);
 				
 			}
@@ -278,7 +306,7 @@ public class AnalysisInterfaceNetwork {
 		dumpApplicationLayerButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(dumpApplicationLayerButton.getSelection())
+				if (dumpApplicationLayerButton.getSelection())
 				{
 					commandLineTagList.updteCommandLineTagList(1, "dump_app_layer");
 					createCommandLine();
@@ -300,7 +328,7 @@ public class AnalysisInterfaceNetwork {
 		displaySecondLayerButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(displaySecondLayerButton.getSelection())
+				if (displaySecondLayerButton.getSelection())
 				{
 					commandLineTagList.updteCommandLineTagList(1, "show_second_layer");
 					createCommandLine();
@@ -322,7 +350,7 @@ public class AnalysisInterfaceNetwork {
 		verboseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(verboseButton.getSelection())
+				if (verboseButton.getSelection())
 				{
 					commandLineTagList.updteCommandLineTagList(1, "verbose_info");
 					createCommandLine();
@@ -354,7 +382,7 @@ public class AnalysisInterfaceNetwork {
 		fullModeButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(fullModeButton.getSelection())
+				if (fullModeButton.getSelection())
 				{
 					commandLineTagList.updteCommandLineTagList(3, "full");
 					createCommandLine();
@@ -375,7 +403,7 @@ public class AnalysisInterfaceNetwork {
 		fastModeButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(fastModeButton.getSelection())
+				if (fastModeButton.getSelection())
 				{
 					commandLineTagList.updteCommandLineTagList(3, "fast");
 					createCommandLine();
@@ -396,7 +424,7 @@ public class AnalysisInterfaceNetwork {
 		unsockModeButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(unsockModeButton.getSelection())
+				if (unsockModeButton.getSelection())
 				{
 					commandLineTagList.updteCommandLineTagList(3, "unsock");
 					createCommandLine();
@@ -417,7 +445,7 @@ public class AnalysisInterfaceNetwork {
 		consoleButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(consoleButton.getSelection())
+				if (consoleButton.getSelection())
 				{
 					commandLineTagList.	updteCommandLineTagList(3, "console");
 					createCommandLine();
@@ -438,7 +466,7 @@ public class AnalysisInterfaceNetwork {
 		cmgButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(cmgButton.getSelection())
+				if (cmgButton.getSelection())
 				{
 					commandLineTagList.updteCommandLineTagList(3, "cmg");
 					createCommandLine();
@@ -459,7 +487,7 @@ public class AnalysisInterfaceNetwork {
 		turnOffAlertingButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(turnOffAlertingButton.getSelection())
+				if (turnOffAlertingButton.getSelection())
 				{
 					commandLineTagList.updteCommandLineTagList(3, "no_alert");
 					createCommandLine();
@@ -484,14 +512,12 @@ public class AnalysisInterfaceNetwork {
 		buttonBinaryFormat.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(buttonBinaryFormat.getSelection())
-				{
+				if (buttonBinaryFormat.getSelection()) {
 					commandLineTagList.updteCommandLineTagList(3, "binary_format_log");
 					createCommandLine();
-				}
-				else
-				{
-					//	Tolgo il riferimento all'opzione di alert "binary_format_log" dalla command line
+				} else {
+					//	Tolgo il riferimento all'opzione di alert
+					//	"binary_format_log" dalla command line
 					commandLineTagList.updteCommandLineTagList(3, "clear_binary_format_log");
 					createCommandLine();
 				}
@@ -505,14 +531,12 @@ public class AnalysisInterfaceNetwork {
 		msgToSysButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(msgToSysButton.getSelection())
-				{
+				if (msgToSysButton.getSelection()) {
 					commandLineTagList.updteCommandLineTagList(3, "msg_to_syslog");
 					createCommandLine();
-				}
-				else
-				{
-					//	Tolgo il riferimento all'opzione di alert "msg_to_syslog" dalla command line
+				} else {
+					//	Tolgo il riferimento all'opzione di alert
+					//	"msg_to_syslog" dalla command line
 					commandLineTagList.	updteCommandLineTagList(3, "clear_msg_to_syslog");
 					createCommandLine();
 				}
@@ -526,13 +550,10 @@ public class AnalysisInterfaceNetwork {
 		noLogButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				if(noLogButton.getSelection())
-				{
+				if (noLogButton.getSelection()) {
 					commandLineTagList.updteCommandLineTagList(3, "no_log");
 					createCommandLine();
-				}
-				else
-				{
+				} else {
 					//	Tolgo il riferimento all'opzione di alert "no_log" dalla command line
 					commandLineTagList.updteCommandLineTagList(3, "clear_no_log");
 					createCommandLine();
@@ -540,6 +561,7 @@ public class AnalysisInterfaceNetwork {
 				
 			}
 		});
+
 		noLogButton.setText("No log");
 		noLogButton.setBounds(10, 75, 130, 22);
 
@@ -551,6 +573,7 @@ public class AnalysisInterfaceNetwork {
 				shell.close();
 			}
 		});
+		
 		BackButton.setText("Back to main interface");
 		BackButton.setBounds(420, 631, 180, 29);
 
@@ -558,12 +581,11 @@ public class AnalysisInterfaceNetwork {
 		testIdsButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				
 				TestIDSInterface testing = new TestIDSInterface();
 				testing.open(mainInterface);
-				
 			}
 		});
+
 		testIdsButton.setText("Test IDS");
 		testIdsButton.setEnabled(false);
 		testIdsButton.setBounds(210, 630, 81, 29);
@@ -573,19 +595,18 @@ public class AnalysisInterfaceNetwork {
 			public void widgetSelected(final SelectionEvent e) 
 			{
 				/*
-				 * Questo metodo dovrà attivare l'input handler, l'attività di analisi dell'IDS e l'output handler
-				 * */
+				 * Questo metodo dovrà attivare l'input handler, l'attività
+				 * di analisi dell'IDS e l'output handler */
 				//	PER TESTARE ADESSO LANCIAMO SUBITO L'ANALISI DELL'IDS
+				
 				mainInterface.getIDSDataFromIdsWrapper().analizeTraffic();
-				
 				testIdsButton.setEnabled(true);
-				
 			}
 		});
+
 		ExecuteAnalysisButton.setText("Execute Analysis");
 		ExecuteAnalysisButton.setBounds(50, 631, 145, 29);
 		
-		//
 		loadData();
 	}
 	
@@ -593,47 +614,51 @@ public class AnalysisInterfaceNetwork {
 	{
 		IDS ids = mainInterface.getIDSDataFromIdsWrapper();
 		String idsName = ids.getName();
+
 		IDSNameAndVersionLabel.setText(idsName);
 		commandLineTagList.inizializeCommandLineTagList();
-//createPanelFeaturesList();		inutile?????
+		//createPanelFeaturesList();		inutile?????
 		enableIDSFeatures();
 		rulesFileText.setText(ids.getPath());
 	}
 	
 	private String createCommandLine()
 	{
-		mainInterface.getIDS().getAnalysisCommandLine().updateCommandLine(commandLineTagList.getTagList());
+		mainInterface.getIDS().getAnalysisCommandLine().
+			updateCommandLine(commandLineTagList.getTagList());
 		CLPreviewText.setText(mainInterface.getIDS().getAnalysisCommandLine().getTextualCL());
+
 		return mainInterface.getIDS().getAnalysisCommandLine().getTextualCL();
 	}
 	
 	private void enableIDSFeatures()
 	{
-		 CLFeatures = (ArrayList<String>) mainInterface.getIDS().getAnalysisCommandLine().getCLFeatures();
+		 CLFeatures = (ArrayList<String>)
+			mainInterface.getIDS().getAnalysisCommandLine().getCLFeatures();
 		
-		if(isFeatureInList("dump_app_layer"))
+		if (isFeatureInList("dump_app_layer"))
 			dumpApplicationLayerButton.setEnabled(true);
-		if(isFeatureInList("show_second_layer"))
+		if (isFeatureInList("show_second_layer"))
 			displaySecondLayerButton.setEnabled(true);
-		if(isFeatureInList("verbose_info"))
+		if (isFeatureInList("verbose_info"))
 			verboseButton.setEnabled(true);
-		if(isFeatureInList("full"))
+		if (isFeatureInList("full"))
 			fullModeButton.setEnabled(true);
-		if(isFeatureInList("fast"))
+		if (isFeatureInList("fast"))
 			fastModeButton.setEnabled(true);
-		if(isFeatureInList("unsock"))
+		if (isFeatureInList("unsock"))
 			unsockModeButton.setEnabled(true);
-		if(isFeatureInList("console"))
+		if (isFeatureInList("console"))
 			consoleButton.setEnabled(true);
-		if(isFeatureInList("cmg"))
+		if (isFeatureInList("cmg"))
 			cmgButton.setEnabled(true);
-		if(isFeatureInList("no_alert"))
+		if (isFeatureInList("no_alert"))
 			turnOffAlertingButton.setEnabled(true);
-		if(isFeatureInList("binary_format_log"))
+		if (isFeatureInList("binary_format_log"))
 			buttonBinaryFormat.setEnabled(true);
-		if(isFeatureInList("msg_to_syslog"))
+		if (isFeatureInList("msg_to_syslog"))
 			msgToSysButton.setEnabled(true);
-		if(isFeatureInList("no_log"))
+		if (isFeatureInList("no_log"))
 			noLogButton.setEnabled(true);
 		
 		
@@ -641,12 +666,10 @@ public class AnalysisInterfaceNetwork {
 	
 	private boolean isFeatureInList(String feature)
 	{
-		for(int i=0; i<CLFeatures.size(); i++)
-		{
-			if(CLFeatures.get(i).equals(feature))
+		for (int i = 0; i < CLFeatures.size(); i++)
+			if (CLFeatures.get(i).equals(feature))
 				return true;
-		}
-		
+
 		return false;
 	}
 	
@@ -654,6 +677,7 @@ public class AnalysisInterfaceNetwork {
 	private ArrayList<String> createPanelFeaturesList()
 	{
 		panelFeaturesList = new ArrayList<String>();
+
 		panelFeaturesList.add("dump_app_layer");
 		panelFeaturesList.add("show_second_layer");
 		panelFeaturesList.add("verbose_info");

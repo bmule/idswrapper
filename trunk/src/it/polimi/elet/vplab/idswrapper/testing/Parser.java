@@ -1,3 +1,28 @@
+/*
+ * $Id$
+ *
+ * $Revision$
+ *
+ * $Date$
+ * 
+ * IDSWrapper - An extendable wrapping interface to manage, run your IDS and to
+ * evaluate its performances.
+ *
+ * Copyright (C) 2009 Davide Polino, Paolo Rigoldi, Federico Maggi. 
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package it.polimi.elet.vplab.idswrapper.testing;
 
 import java.io.BufferedReader;
@@ -9,15 +34,14 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 /** 
- * 
  * This class specifies how to parse a file of entities: simply returns the 
  * entities, like an iterator. It is a superclass of all the concrete parsers.
+ *
  * To add new specific parser, add the class to the package, 
  * then set it to the {@link ParserFactory}.
  * 
  * @author Claudio Magni
- * @version 1.0
- * 
+ * @version $Id$
  */
 
 public class Parser {
@@ -26,7 +50,7 @@ public class Parser {
 	 * entity is a single alert or attack.
 	 */
 	protected Entity entity;
-	protected TimeZone timeZ; // Timezone offset
+	protected TimeZone timeZ;
 	
 	/*
 	 * Variables needed to handle file and lines
@@ -45,8 +69,9 @@ public class Parser {
 	{
 		super();
 	}
-	
-	protected void closeFile() throws IOException
+
+	protected void closeFile()
+		throws IOException
 	{
 		fis.close();
 		isr.close();
@@ -59,7 +84,8 @@ public class Parser {
 	 * 
 	 * @param timeZone The time zone string.
 	 */
-	public void setTimeZone(String timeZone) {
+	public void setTimeZone(String timeZone)
+	{
 		this.timeZ = TimeZone.getTimeZone(timeZone);
 	}
 	
@@ -68,15 +94,17 @@ public class Parser {
 	 * 
 	 * @param path The complete name of the file.
 	 */
-	public void setFile(String path) {
+	public void setFile(String path)
+	{
 		file_name = path;
-
 		f = new File(file_name);
+
 		try {
 			fis = new FileInputStream(f);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+
 		isr = new InputStreamReader(fis);
 		br = new BufferedReader(isr);
 	}
