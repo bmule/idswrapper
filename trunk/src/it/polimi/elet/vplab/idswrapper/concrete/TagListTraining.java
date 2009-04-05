@@ -32,11 +32,12 @@ public class TagListTraining
 {
 	ArrayList commandLineTagList;
 	ArrayList commandLineTagSubListOptions;
-	//	commandLineTagSubListPackets è un ArrayList che è costituito 
-	//	elementi di tipo packet gli elementi di tipo packet sono a loro volta
-	//	ArrayList di 2 elementi. Un elemento è un oggetto di tipo packetInfo
-	//	(ArrayList di stringhe di 2 posizioni), l'altro è una stringa semplice
-	//	ed indica il path dell'i-esimo file di pacchetti
+	
+	/*	commandLineTagSubListPackets is an ArrayList object. It contains elements of type "packet".
+	 * 	packet-type objects are ArrayList of two elements. A packet contains: 
+	 * 	1) one element of packetInfo type. packetInfo are ArrayList<String> objects with two elements.
+	 * 	2) a String element that contains the path of the #i file of packets.
+	*/
 	ArrayList commandLineTagSubListPackets;
 	ArrayList packet;
 	ArrayList<String> packetInfo;
@@ -56,7 +57,7 @@ public class TagListTraining
 		subListStruct3.add("");
 		subListStruct3.add("");
 
-		//	Inizializzo commandLineTagList: inserisco stringhe e vettori vuoti: poi li modificherò
+		//	commandLineTagList initialization
 		commandLineTagSubListOptions = new ArrayList();
 		commandLineTagSubListOptions.add("");
 		commandLineTagSubListOptions.add("");
@@ -80,7 +81,7 @@ public class TagListTraining
 
 	public ArrayList updteCommandLineTagList(int position, Object data)
 	{
-		//	Struttura dati vuota...
+		//	An empty data structure
 		subListStruct1 = new ArrayList();
 		subListStruct1.add("");
 		subListStruct1.add("");
