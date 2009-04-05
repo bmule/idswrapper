@@ -25,6 +25,7 @@
  */
 package it.polimi.elet.vplab.idswrapper.concrete;
 
+import it.polimi.elet.vplab.idswrapper.Main;
 import it.polimi.elet.vplab.idswrapper.ids.IDS;
 import it.polimi.elet.vplab.idswrapper.gui.TestInterfaceUlisseSS;
 
@@ -46,9 +47,7 @@ import org.w3c.dom.NodeList;
 public class Ulisse
 	extends IDS 
 {
-	//	Attributo relativo all'interfaccia di testing (molto specifica per
-	//	Ulisse, non generalizzabile per altri IDS) TestInterfaceUlisseSS
-	//	testingInterface;
+	
 	@SuppressWarnings("unchecked")
 		public Ulisse(String IDSpath, String IDSversion, ArrayList input,
 			ArrayList output)
@@ -88,17 +87,15 @@ public class Ulisse
 		this.commandLineTraining = new UlisseCLTraining();
 	}
 
-	//	Metodi relativi all'interfaccia di testing
+	//	Testing interface methods
 	public TestInterfaceUlisseSS getTestingInterface(String SSBaseName)
 	{
 		testingInterface = new TestInterfaceUlisseSS();
 		return (TestInterfaceUlisseSS) testingInterface;
 	}
-
-	//	Il seguente metodo permette di modificare i file XML di configurazione
-	//	di Ulisse evitando l'edit manuale I dati relativi all'indirizzo ip e
-	//	alla netmask saranno forniti dall'utente (tramite l'interfaccia) al
-	//	momento della configurazione della fase di training.
+	
+	/*	This method allow to modify Ulisse's XML configuration files with the training GUI
+	 * */
 	public void changeTrainSettings(String XMLPathAndBase, String basenameFirstPart,
 		String ip_address, String net_mask)
 	{
@@ -119,13 +116,13 @@ public class Ulisse
 
 			Main.logger.info(((Node) varsNode.getChildNodes().item(21)).getNodeName());
 			
-			//	Creazione del nodo con Variable Type="PLD_CLS"
+			//	Creation of the node with Variable Type ="PLD_CLS"
 			Node varNode = (Node) varsNode.getChildNodes().item(21);
 			NamedNodeMap attr = varNode.getAttributes();
 			Main.logger.info(attr.getNamedItem("XMLBaseName").getNodeValue());
 			attr.getNamedItem("XMLBaseName").setNodeValue(basenameFirstPart);
 
-			//	Creazione del nodo con Variable Type="IP_SRC_SP"
+			//	Creation of the node with Variable Type="IP_SRC_SP"
 			Node varNodeIP = (Node) varsNode.getChildNodes().item(17);
 			NamedNodeMap attrIP = varNodeIP.getAttributes();
 			Main.logger.info(attrIP.getNamedItem("NetworkAddress").getNodeValue());
@@ -133,7 +130,7 @@ public class Ulisse
 			Main.logger.info(attrIP.getNamedItem("NetworkMask").getNodeValue());
 			attrIP.getNamedItem("NetworkMask").setNodeValue(net_mask);
 
-			//	Salvataggio delle modifiche nel file XML
+			//	Save on XML file
 			XMLSerializer serializer = new XMLSerializer();
 			serializer.setOutputCharStream(new java.io.FileWriter(XMLPathAndBase +
 				"_ia.xml"));
@@ -146,8 +143,6 @@ public class Ulisse
 
 	public void analizeTraffic()
 	{
-		//	Creazione di un vettore di String a partire dalla CL presente
-		//	nell'attributo dell'IDS
 		Main.logger.info("Command line: " + this.commandLineAnalysis.getTextualCL());
 
 		String[] cmd;
@@ -168,7 +163,7 @@ public class Ulisse
 			k++;
 		}
 
-		//	Lancio dell'attivita` di analisi
+		//	Start the analysis activity
 		try {            
 			//	String cmd = this.commandLine.getTextualCL();
 			Process analisysProgess;
