@@ -42,8 +42,7 @@ public class UlisseCLAnalysis
 		
 	}
 	
-	//	traduce i tag generici della commandLineTagList nei parametri usabili
-	//	da Snort
+	// Translate the generic tags of the commandLineTagList into snort's specific parameters
 	@SuppressWarnings("unchecked")
 	public void updateCommandLine(ArrayList commandLineTagList)
 	{
@@ -51,8 +50,7 @@ public class UlisseCLAnalysis
 		
 		clTokens.add("snort");
 		
-		//	Controllo che vi siano delle opzioni sulle modalità di report dei
-		//	risultati in posizione 1
+		//	Result report mode options (position 1)
 		ArrayList reportModeArray = (ArrayList)(commandLineTagList.get(1));
 		if ( reportModeArray.size() != 0) {
 			for(int i = 0; i < reportModeArray.size(); i++) {
@@ -65,12 +63,11 @@ public class UlisseCLAnalysis
 			}
 		}
 		
-		//	Inserisco nella CL il riferimento al logfile (se presente)
+		//	Insert into CL the logfile parameter
 		if (!commandLineTagList.get(2).equals(""))
 			clTokens.add(" -l "+ commandLineTagList.get(2));
 		
-		//	Controllo che vi siano delle opzioni sulle modalità di alert in
-		//	posizione 3
+		//	Alert mode options (position 3)
 		ArrayList alertList = (ArrayList)commandLineTagList.get(3);
 		String alertModeArray = (String)alertList.get(0);
 
@@ -96,23 +93,20 @@ public class UlisseCLAnalysis
 		if (((String)alertList.get(3)).equals("no_log"))
 			clTokens.add(" -N");
 		
-		//	Inserisco nella CL la specifica della classe di pacchetti da
-		//	analizzare (se specificata)
+		//	Insert into  CL the class of the packets to analyze
 		if (!commandLineTagList.get(4).equals(""))
 			clTokens.add(" -h "+ commandLineTagList.get(4));
 		
-		//	Inserisco nella CL la posizione del file delle regole
+		//	Insert into CL the path of the rules file
 		if (!commandLineTagList.get(5).equals(""))
 			clTokens.add(" -c "+ commandLineTagList.get(5));
 			
-		//	Inserisco nella CL la posizione del file tcpdump da analizzare (se
-		//	specificata)
+		//	Insert into CL the path of the tcpdump file to analyze
 		if (!commandLineTagList.get(6).equals(""))
 			clTokens.add(" -r "+ commandLineTagList.get(6));
 		
 	}
 	
-	//	Restituisce la stringa testuale della command line
 	public String getTextualCL()
 	{
 		String strOut = "";
@@ -129,11 +123,12 @@ public class UlisseCLAnalysis
 	
 	private void initializeCLFeature()
 	{
-		//	Questo ArrayList di String contiene i tag corrispondenti alle
-		//	funzionalità di snort, che verranno controllate dall'interfaccia
-		//	grafica per abilitare o meno i checkbox per la formazione della
-		//	CommandLine se un IDS non dovesse avere certe funzionalità,
-		//	queste risultarebbero non selezionabili a livello di interfaccia
+		/*
+		 * This ArrayList<String> contains some tags that correspond to the snort features
+		 * that will be controlled by the GUI.
+		 * If an IDS does not have a specific feature, the corresponding checkbox in the GUI
+		 * will not be selectable.
+		 */
 
 		CLFeatures = new ArrayList<String>();
 		CLFeatures.add("dump_app_layer");
