@@ -140,7 +140,6 @@ public abstract class IDS
 		
 	}
 	
-	//	??
 	public void newCommandLineAnalysis()
 	{
 		

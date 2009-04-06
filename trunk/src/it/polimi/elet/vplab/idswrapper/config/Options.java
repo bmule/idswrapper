@@ -42,7 +42,6 @@ import java.util.Properties;
  * @version $Id$
  */
 public class Options {
-
     private static final String LOGGING_CONFIG_DEFAULT = "logging.properties";
     private static final String LOGGING_CONFIG_VERBOSE = "logging-verbose.properties";
     private static final String LOGGING_CONFIG_DEBUG = "logging-debug.properties";
@@ -51,19 +50,7 @@ public class Options {
     private static String projectName = null;
     private static String loggingProperties = LOGGING_CONFIG_DEFAULT;
 
-    private static String charSet = "ISO-8859-1";
-	
 	private static Properties properties = new Properties();
-
-    public static String getCharSet()
-	{
-        return charSet;
-    }
-
-    public static void setCharSet(final String cs)
-	{
-        charSet = cs;
-    }
 
     /**
      * Method getProjectName.
@@ -100,15 +87,6 @@ public class Options {
     }
 
     /**
-     * Sets a project title to be used in the reports
-     * @param projectName The project title to be used in the reports
-     */
-    public static void setProjectName(final String projectName)
-	{
-        Options.projectName = projectName;
-    }
-
-    /**
      * Gets the name of the logging properties file
      * @return the name of the logging properties file
      */
@@ -131,37 +109,6 @@ public class Options {
     public static void setDebugLogging()
 	{
         Options.loggingProperties = LOGGING_CONFIG_DEBUG;
-    }
-
-    /**
-     * Set the config file that may contain user details.
-     * @param propertiesFilename
-     */
-    public static void setConfigFile(final String propertiesFilename)
-		throws ConfigurationException
-	{
-        if (propertiesFilename != null) {
-            InputStream is = null;
-            try {
-                is = new FileInputStream(propertiesFilename);
-                properties.load(is);
-            } catch (final FileNotFoundException e) {
-                throw new ConfigurationException("Unable to find the configuration file " +
-					propertiesFilename);
-            } catch (final IOException e) {
-                throw new ConfigurationException("Problem reading the configuration file " +
-					propertiesFilename);
-            } finally {
-                if (is != null) {
-                    try {
-                        is.close();
-                    } catch (final IOException e) {
-                        throw new ConfigurationException("Problem closing stream to the" +
-							" configuration file " + propertiesFilename);
-                    }
-                }
-            }
-        }
     }
 
     /**
