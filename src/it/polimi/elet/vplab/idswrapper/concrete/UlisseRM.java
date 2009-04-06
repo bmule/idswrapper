@@ -54,7 +54,7 @@ public class UlisseRM
 	{
 		FileReader reader;
 		rulesList = new ArrayList<String>();
-		
+
 		try {
 			reader = new FileReader(fileName);
 		} catch (FileNotFoundException e) {
@@ -64,16 +64,16 @@ public class UlisseRM
 		Scanner in = new Scanner(reader);
 		String ruleUnderConstruction = "";
 		boolean previousRuleClosed = true;
-		
+
 		while (in.hasNextLine()) {   
 			String line = in.nextLine();
 			String fw = getFirstWord(line);
 			String lastLineChar = "";
-			
+
 			if (fw.equals("alert") || fw.equals("log") ||
-				fw.equals("pass") || fw.equals("activate") ||
-				fw.equals("dynamic") || fw.equals("drop") ||
-				fw.equals("reject") || fw.equals("sdrop")) {
+					fw.equals("pass") || fw.equals("activate") ||
+					fw.equals("dynamic") || fw.equals("drop") ||
+					fw.equals("reject") || fw.equals("sdrop")) {
 
 				if (previousRuleClosed) {
 					if (getLastTwoChars(line).equals(";)")) {
@@ -85,17 +85,18 @@ public class UlisseRM
 
 						if (!line.equals("") && !getLastChar(line).equals(" "))
 							lastLineChar = getLastChar(line);
-				}
-			} else {
-				if (!previousRuleClosed) {
-					ruleUnderConstruction = ruleUnderConstruction + line;
+					}
+				} else {
+					if (!previousRuleClosed) {
+						ruleUnderConstruction = ruleUnderConstruction + line;
 
-					if ((getLastTwoChars(line).equals(";)")) ||
-						(getLastTwoChars(line).equals(")") &&
-						lastLineChar.equals(";"))) {
+						if ((getLastTwoChars(line).equals(";)")) ||
+								(getLastTwoChars(line).equals(")") &&
+								 lastLineChar.equals(";"))) {
 
-						previousRuleClosed = true;
-						rulesList.add(ruleUnderConstruction);
+							previousRuleClosed = true;
+							rulesList.add(ruleUnderConstruction);
+						}
 					}
 				}
 			}
@@ -175,7 +176,10 @@ public class UlisseRM
 		//String result = "";
 		
 		if(charArray.length > 0) {
-			for (int i = charArray.length - 1; i > 0 && charArray[i] == ' '; i--);
+			int i = charArray.length - 1;
+
+			while (i > 0 && charArray[i] == ' ')
+				i--;
 
 			return String.valueOf(charArray[i]);
 		}

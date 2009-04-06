@@ -25,9 +25,9 @@
  */
 package it.polimi.elet.vplab.idswrapper.concrete;
 
+import it.polimi.elet.vplab.idswrapper.gui.TestInterfaceUlisseSS;
 import it.polimi.elet.vplab.idswrapper.Main;
 import it.polimi.elet.vplab.idswrapper.ids.IDS;
-import it.polimi.elet.vplab.idswrapper.gui.TestInterfaceUlisseSS;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -137,7 +137,7 @@ public class Ulisse
 			serializer.serialize(doc);
 
 		} catch (Exception e) {
-			Main.logger.error("Error in file access");
+			Main.logger.severe("Error in file access");
 		}
 	}
 
@@ -174,12 +174,12 @@ public class Ulisse
 			String line = "";
 
 			while ((line = input.readLine()) != null)
-				Main.logger.debug(line);
+				Main.logger.fine(line);
 			
 			input.close();
 			Main.logger.info("Launched");
 		} catch (Throwable t) {
-			Main.logger.error(t);
+			Main.logger.severe(t.toString());
 		}
 	}
 
@@ -209,16 +209,16 @@ public class Ulisse
 			trainigProgess = Runtime.getRuntime().exec(cmd);
 
 			BufferedReader input = new BufferedReader(new InputStreamReader(
-				trainigProgess.getInputStream()));
+						trainigProgess.getInputStream()));
 			String line = "";
 
 			while ((line = input.readLine()) != null)
-				Main.logger.debug(line);
+				Main.logger.fine(line);
 			input.close();
 
 			Main.logger.info("Training launched");
 		} catch (Throwable t) {
-			Main.logger.error(t);
+			Main.logger.severe(t.toString());
 		}
 	}
 }

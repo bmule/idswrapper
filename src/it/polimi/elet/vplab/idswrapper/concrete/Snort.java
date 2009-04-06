@@ -26,6 +26,7 @@
 package it.polimi.elet.vplab.idswrapper.concrete;
 
 import it.polimi.elet.vplab.idswrapper.ids.IDS;
+import it.polimi.elet.vplab.idswrapper.Main;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -102,7 +103,7 @@ public class Snort
 
 			Main.logger.info("Launched");
 		} catch (Throwable t) {
-			Main.logger.error(t);
+			Main.logger.severe(t.toString());
 		}
 	}
 
