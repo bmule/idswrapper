@@ -30,6 +30,8 @@ import it.polimi.elet.vplab.idswrapper.filemanager.FileManager;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -48,6 +50,21 @@ public class UlisseRM
 		boolean sintaxIsCorrect = false;
 		
 		return sintaxIsCorrect;
+	}
+	
+	public boolean loadRuleFile(String filePath)
+	{
+		@SuppressWarnings("unused")
+		FileReader reader;
+		try 
+		{
+			reader = new FileReader(filePath);
+			return true;
+		} 
+		catch (FileNotFoundException e) 
+		{
+			return false;
+		}
 	}
 	
 	public ArrayList<String> loadRules(String fileName)
@@ -77,7 +94,7 @@ public class UlisseRM
 
 				if (previousRuleClosed) {
 					if (getLastTwoChars(line).equals(";)")) {
-						//	In questo caso abbiamo una regola completa su un'unica linea
+						//	The rule is on a unique row
 						rulesList.add(line);
 					} else {
 						previousRuleClosed = false;
@@ -111,14 +128,74 @@ public class UlisseRM
 		return str; 
 	}
 	
-	public void changeRule(String newRule, int index)
+	public boolean changeARule(String filePath, String ruleToChange, String newRule)
 	{
+		/*
+		 * This method search for a rule that is equals to "ruleToChange" and replace it with "newRule"
+		 */
 		
+		FileReader reader;
+		//	greatString will contain all the rules in the file
+		String greatString = "";
+		String newGreatString = "";
+		
+		try 
+		{
+			reader = new FileReader(filePath);
+			
+		} 
+		catch (FileNotFoundException e) 
+		{
+			return false;
+		}
+		Scanner in = new Scanner(reader);
+		
+		while(in.hasNextLine())
+		{   
+			greatString = greatString + in.nextLine() + "\n";
+		}		
+		newGreatString = greatString.replace(ruleToChange, newRule);
+		//	Save newGreatString into rules file
+		FileWriter writer;
+		try 
+		{
+			writer = new FileWriter(filePath);
+			writer.write(newGreatString);
+			writer.close();
+		} 
+		catch (FileNotFoundException e) 
+		{
+			return false;
+		}
+		 catch (IOException e) 
+		 {
+			e.printStackTrace();
+			return false;
+		}
+
+		 return true;
 	}
 	
-	public void insertNewRule(String newRule)
+	public boolean insertNewRule(String filePath, String newRule)
 	{
-		
+
+		FileWriter writer;
+		try 
+		{
+			writer = new FileWriter(filePath,true);
+			writer.write("\n"+newRule);
+			writer.close();
+		} 
+		catch (FileNotFoundException e) 
+		{
+			return false;
+		}
+		 catch (IOException e) 
+		 {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 	
 	private String getLastTwoChars(String str)
