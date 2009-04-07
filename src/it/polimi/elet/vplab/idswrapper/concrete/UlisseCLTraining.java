@@ -41,8 +41,7 @@ public class UlisseCLTraining
 		initializeCLFeature();
 	}
 	
-	//	traduce i tag generici della commandLineTagList nei parametri usabili
-	//	da Snort
+	//	Translate generic commandLineTagList tags into snort parameters
 	
 	@SuppressWarnings("unchecked")
 	public void updateCommandLine(ArrayList commandLineTagList)
@@ -53,9 +52,8 @@ public class UlisseCLTraining
 			clTokens.add("som_training");
 		else if (commandLineTagList.get(0).equals("second_train"))
 			clTokens.add("ss_training");
-
-		//	Controllo che vi siano delle opzioni sulle modalità di report dei
-		//	risultati in posizione 1
+		
+		//	Check the options about REPORT mode (position 1)
 		
 		ArrayList optionsModeArray = (ArrayList)(commandLineTagList.get(1));
 
@@ -75,14 +73,14 @@ public class UlisseCLTraining
 			if (optionsModeArray.get(6).equals("random_pseudocasual"))
 				clTokens.add(" --pseudocasual");	
 			
-			//	AGGIUNGERE QUI EVENTUALI ALTRE OPZIONI PER IL TRAINING DI ULISSE	
+			//	Add here other options about Ulisse training activity
 		}
 		
-		//	Percorso del file di log
+		//	Log file path
 		if (!commandLineTagList.get(2).equals(""))
 			clTokens.add(" -l "+ commandLineTagList.get(2));
 		
-		//	Percorso del file XML di configurazione
+		//	XML configuration file path
 		if (!commandLineTagList.get(3).equals(""))
 			clTokens.add(" "+ commandLineTagList.get(3));
 		
@@ -107,7 +105,6 @@ public class UlisseCLTraining
 		
 	}
 	
-	//	Restituisce la stringa testuale della command line
 	public String getTextualCL()
 	{
 		String strOut = "";
@@ -126,12 +123,12 @@ public class UlisseCLTraining
 	
 	private void initializeCLFeature()
 	{
-		//	Questo ArrayList di String contiene i tag corrispondenti alle
-		//	funzionalità di addestramento di ulisse che verranno controllate
-		//	dall'interfaccia grafica per abilitare o meno i checkbox per la
-		//	formazione della CommandLine se un IDS non dovesse avere certe
-		//	funzionalità, queste risultarebbero non selezionabili a livello
-		//	di interfaccia
+		/*
+		 * This ArrayList<String> contains some tags that correspond to the Ulisse's training features
+		 * that will be controlled by the GUI.
+		 * If an IDS does not have a specific feature, the corresponding checkbox in the GUI
+		 * will not be selectable.
+		 */
 		
 		CLFeatures = new ArrayList<String>();
 
