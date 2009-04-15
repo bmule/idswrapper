@@ -80,7 +80,7 @@ public class AnalysisInterfaceNetwork {
 	Button noLogButton;
 	TagListAnalysis commandLineTagList = new TagListAnalysis();
 	
-	//	Rappresenta le funzionalità mostrate nell'interfaccia
+	//	It contains the panel features
 	ArrayList<String> panelFeaturesList;
 	ArrayList<String> CLFeatures;
 
@@ -166,7 +166,7 @@ public class AnalysisInterfaceNetwork {
 				else
 				{
 					logFileText.setEnabled(true);
-					//	Tolgo il riferimento al log file dalla command line
+					//	Delete the log file reference from command line
 					commandLineTagList.updteCommandLineTagList(2, "");
 					createCommandLine();
 				}
@@ -188,7 +188,7 @@ public class AnalysisInterfaceNetwork {
 				else
 				{
 					TrafficFileText.setEnabled(true);
-					//	Tolgo il riferimento al traffic file dalla command line
+					//	Delete the traffic file reference from command line
 					commandLineTagList.updteCommandLineTagList(6, "");
 					createCommandLine();
 				}
@@ -210,7 +210,7 @@ public class AnalysisInterfaceNetwork {
 				else
 				{
 					rulesFileText.setEnabled(true);
-					//	Tolgo il riferimento al rule file dalla command line
+					//	Delete the rules file reference from command line
 					commandLineTagList.updteCommandLineTagList(5, "");
 					createCommandLine();
 				}
@@ -241,7 +241,7 @@ public class AnalysisInterfaceNetwork {
 				else
 				{
 					NetworkText.setEnabled(true);
-					//	Tolgo il riferimento all'home network dalla command line
+					//	Delete the home network reference from command line
 					commandLineTagList.updteCommandLineTagList(4, "");
 					createCommandLine();
 				}
@@ -313,7 +313,7 @@ public class AnalysisInterfaceNetwork {
 				}
 				else
 				{
-					//	Tolgo il riferimento al dump application layer dalla command line
+					//	Delete the "dump application layer" reference from command line
 					commandLineTagList.updteCommandLineTagList(1, "clear_dump_app_layer");
 					createCommandLine();
 				}
@@ -335,7 +335,7 @@ public class AnalysisInterfaceNetwork {
 				}
 				else
 				{
-					//	Tolgo il riferimento al show second layer layer dalla command line
+					//	Delete the "show second layer" reference from command line
 					commandLineTagList.updteCommandLineTagList(1, "clear_show_second_layer");
 					createCommandLine();
 				}
@@ -357,7 +357,7 @@ public class AnalysisInterfaceNetwork {
 				}
 				else
 				{
-					//	Tolgo il riferimento al clear verbose info dalla command line
+					//	Delete the "clear verbose" reference from command line
 					commandLineTagList.updteCommandLineTagList(1, "clear_verbose_info");
 					createCommandLine();
 				}
@@ -389,7 +389,7 @@ public class AnalysisInterfaceNetwork {
 				}
 				else
 				{
-					//	Tolgo il riferimento alla modalità di alert full dalla command line
+					//	Delete the full alert mode reference from command line
 					commandLineTagList.updteCommandLineTagList(3, "clear_full");
 					createCommandLine();
 				}
@@ -410,7 +410,7 @@ public class AnalysisInterfaceNetwork {
 				}
 				else
 				{
-					//	Tolgo il riferimento alla modalità di alert fast dalla command line
+					//	Delete the fast alert mode reference from command line
 					commandLineTagList.updteCommandLineTagList(3, "clear_fast");
 					createCommandLine();
 				}
@@ -431,7 +431,7 @@ public class AnalysisInterfaceNetwork {
 				}
 				else
 				{
-					//	Tolgo il riferimento alla modalità di alert unsock dalla command line
+					//	Delete the unsock alert mode reference from command line
 					commandLineTagList.	updteCommandLineTagList(3, "clear_unsock");
 					createCommandLine();
 				}
@@ -452,7 +452,7 @@ public class AnalysisInterfaceNetwork {
 				}
 				else
 				{
-					//	Tolgo il riferimento alla modalità di alert binary format log dalla command line
+					//	Delete the binary format mode reference from command line
 					commandLineTagList.updteCommandLineTagList(3, "clear_console");
 					createCommandLine();
 				}
@@ -473,7 +473,7 @@ public class AnalysisInterfaceNetwork {
 				}
 				else
 				{
-					//	Tolgo il riferimento alla modalità di alert send message to syslog dalla command line
+					//	Delete the "alert send message to syslog" mode reference from command line
 					commandLineTagList.updteCommandLineTagList(3, "clear_cmg");
 					createCommandLine();
 				}
@@ -494,7 +494,7 @@ public class AnalysisInterfaceNetwork {
 				}
 				else
 				{
-					//	Tolgo il riferimento alla modalità di alert "none" dalla command line
+					//	Delete the "none" alert mode reference from command line
 					commandLineTagList.updteCommandLineTagList(3, "clear_no_alert");
 					createCommandLine();
 				}
@@ -516,8 +516,7 @@ public class AnalysisInterfaceNetwork {
 					commandLineTagList.updteCommandLineTagList(3, "binary_format_log");
 					createCommandLine();
 				} else {
-					//	Tolgo il riferimento all'opzione di alert
-					//	"binary_format_log" dalla command line
+					//	Delete the "binary_format_log" alert mode reference from command line
 					commandLineTagList.updteCommandLineTagList(3, "clear_binary_format_log");
 					createCommandLine();
 				}
@@ -535,8 +534,7 @@ public class AnalysisInterfaceNetwork {
 					commandLineTagList.updteCommandLineTagList(3, "msg_to_syslog");
 					createCommandLine();
 				} else {
-					//	Tolgo il riferimento all'opzione di alert
-					//	"msg_to_syslog" dalla command line
+					//	Delete the "msg_to_syslog" alert mode reference from command line
 					commandLineTagList.	updteCommandLineTagList(3, "clear_msg_to_syslog");
 					createCommandLine();
 				}
@@ -554,7 +552,7 @@ public class AnalysisInterfaceNetwork {
 					commandLineTagList.updteCommandLineTagList(3, "no_log");
 					createCommandLine();
 				} else {
-					//	Tolgo il riferimento all'opzione di alert "no_log" dalla command line
+					//	Delete the "no_log" alert mode reference from command line
 					commandLineTagList.updteCommandLineTagList(3, "clear_no_log");
 					createCommandLine();
 				}
@@ -595,9 +593,14 @@ public class AnalysisInterfaceNetwork {
 			public void widgetSelected(final SelectionEvent e) 
 			{
 				/*
-				 * Questo metodo dovrà attivare l'input handler, l'attività
-				 * di analisi dell'IDS e l'output handler */
-				//	PER TESTARE ADESSO LANCIAMO SUBITO L'ANALISI DELL'IDS
+				 * TODO: This method will activate the input handler, the IDS analysis activity 
+				 * and the output handler.
+				 * 
+				 * The input and output handlers methods, currently, are not implemented.
+				 * 
+				 * So we launch only the IDS analysis activity 
+				 * 
+				 */
 				
 				mainInterface.getIDSDataFromIdsWrapper().analizeTraffic();
 				testIdsButton.setEnabled(true);
@@ -617,7 +620,6 @@ public class AnalysisInterfaceNetwork {
 
 		IDSNameAndVersionLabel.setText(idsName);
 		commandLineTagList.inizializeCommandLineTagList();
-		//createPanelFeaturesList();		inutile?????
 		enableIDSFeatures();
 		rulesFileText.setText(ids.getPath());
 	}
