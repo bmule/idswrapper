@@ -140,12 +140,12 @@ public class IDSSelectionInterface{
 		confirmButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				//	setto la variabile di terminazione della selezione dell'IDS
+				//	set of the ids-end-selection variable
 				selectionDone = true;
 				mainInterface.reloadLabelsAndButtons();
 				shell.close();
 				
-				//	invoco il metodo per l'istanziazione dell'IDS
+				//	call of the IDS creatore method
 				IDSCreator idsCreator = new IDSCreator();
 				mainInterface.readIDSFromInterface(idsCreator.createIDSIstance(alist, selectedIndex, IDSpath));
 				
@@ -158,8 +158,6 @@ public class IDSSelectionInterface{
 		okButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				//	TODO: basta controllare che il campo di testo non sia vuoto o va controllata l'esistenza dei dati
-				//	nella cartella?
 				if((comboIDSSelection.getSelectionIndex() >= 0) && ((textIDSPath.getText()).length()>0))
 				{
 					IDSpath = textIDSPath.getText();
@@ -197,8 +195,7 @@ public class IDSSelectionInterface{
 		browseButton.setText("Browse");
 		browseButton.setBounds(426, 132, 70, 29);
 		
-		
-		// Richiamo il metodo di aggiornamento dei contenuti
+		//	call of the content update method
 		loadData();
 	}
 	
@@ -229,7 +226,6 @@ public class IDSSelectionInterface{
 	@SuppressWarnings("unchecked")
 	private void writeReport()
 	{
-System.out.println("SELECTED INDEX "+ selectedIndex);
 			list.add("Name: "+(((ArrayList)(alist.get(selectedIndex))).get(0)).toString()+"     Version: "+(((ArrayList)(alist.get(selectedIndex))).get(1)).toString());
 			list.add("Type: "+(((ArrayList)(alist.get(selectedIndex))).get(2)).toString());
 			list.add("Paradigm: "+(((ArrayList)(alist.get(selectedIndex))).get(3)).toString());
@@ -238,39 +234,5 @@ System.out.println("SELECTED INDEX "+ selectedIndex);
 			list.add("Supported output format: "+(((ArrayList)(alist.get(selectedIndex))).get(5)).toString());
 	}
 	
-/*	private ArrayList stringListToArray(String strList)
-	{
-		ArrayList alist = new ArrayList();
-		
-		StringTokenizer st = new StringTokenizer(strList,",");
-		while(st.hasMoreTokens())
-		{
-			String token = st.nextToken();
-				alist.add(token);
-		}
-		return alist;
-	}
-	
-	
-	//	Qui andranno inserite le istanziazioni delle classi di tutti i nuovi IDS aggiunti
-	private IDS createIDSIstance()
-	{
-		IDSWrapperAbstract.IDS IDS = null;
-	
-		if((((ArrayList)(alist.get(selectedIndex))).get(0)).toString().equals("Snort"))
-		{
-			IDS = new IDSWrapperConcrete.Snort(IDSpath, ((((ArrayList)(alist.get(selectedIndex))).get(1)).toString()), stringListToArray((((ArrayList)(alist.get(selectedIndex))).get(4)).toString()),stringListToArray((((ArrayList)(alist.get(selectedIndex))).get(5)).toString()));
-			IDS.newCommandLineAnalysis();
-		}
-		else if((((ArrayList)(alist.get(selectedIndex))).get(0)).toString().equals("Ulisse"))
-		{
-			IDS = new IDSWrapperConcrete.Ulisse(IDSpath, ((((ArrayList)(alist.get(selectedIndex))).get(1)).toString()), stringListToArray((((ArrayList)(alist.get(selectedIndex))).get(4)).toString()),stringListToArray((((ArrayList)(alist.get(selectedIndex))).get(5)).toString()));
-			IDS.newCommandLineAnalysis();
-			IDS.newCommandLineTraining();
-		}
-	//System.out.print("STO PER RICHIAMARE il metodo.....");
-	//mainInterface.idsWrapper.selectIDS(IDS);
-		return IDS;
-		
-	}*/
+
 }
