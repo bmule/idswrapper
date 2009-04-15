@@ -63,27 +63,17 @@ public class IDSWrapperVisualInterface extends Thread {
 	Label selectOutputTypeLabel;
 	IDSWrapper idsWrapper;
 	IDS selectedIds = null;
-	//	la seguente variabile diventa true se si è terminato di selezionare IDS, tipi di input e tipi di output
+	//	the following variable will be set to true if the ids and in&output types selection is terminated
 	boolean selectionFinished = false;
 		
 	/**
 	 * Launch the application
 	 * @param args
 	 */
-	/*public static void main(String[] args) {
-		try {
-			window = new IDSWrapperVisualInterface();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
 	public void startInterface(IDSWrapper idsW)
-	//public void run()
 	{
 		this.idsWrapper = idsW;
 		try {
-			//window = new IDSWrapperVisualInterface();
 			window = this.idsWrapper.getVisualInterface();
 			window.open();
 		} catch (Exception e) {
@@ -95,7 +85,7 @@ public class IDSWrapperVisualInterface extends Thread {
 	 * Open the window
 	 */
 	public void open() {
-		//	Istanzio gli oggetti relativi alle altre interfacce
+		//	create the objects related by the others interfaces
 		IDSSelection = new IDSSelectionInterface();
 		inputSelection = new InputTypeSelection();
 		outputSelection = new OutputTypeSelection();
@@ -131,8 +121,6 @@ public class IDSWrapperVisualInterface extends Thread {
 			{
 				IDSSelection.open(window);
 				selectInputTypesButton.setEnabled(true);
-				//setIDSFromInterface((IDSSelection.open(window)));
-				//getIDS();
 			}
 		});
 		selectIdsButton.setText("Select IDS");
@@ -158,7 +146,7 @@ public class IDSWrapperVisualInterface extends Thread {
 			public void widgetSelected(final SelectionEvent e) 
 			{
 				inputSelection.open(window);
-				//	terminata la selezione degli input, abilito il pulsante degli output
+				//	enable the output selection button
 				selectOutputTypesButton.setEnabled(true);
 			}
 		});
@@ -193,8 +181,7 @@ public class IDSWrapperVisualInterface extends Thread {
 		analysisConfigurationButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				//	Controllo il tipo di IDS selezionato ed istanzio l'interfaccia visuale di analisi
-				//	corrispondente
+				//	Check the selected ids type and create the correspondent visual interfaces
 				if((idsWrapper.getIDS().getType()).equals("network"))
 				{
 					analysisInterfaceNet = new AnalysisInterfaceNetwork();
@@ -215,8 +202,7 @@ public class IDSWrapperVisualInterface extends Thread {
 		trainTheIdsButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) 
 			{
-				//	Controllo il tipo di IDS selezionato ed istanzio l'interfaccia visuale di analisi
-				//	corrispondente
+				//	Check the selected ids type and create the correspondent visual interfaces
 				if((idsWrapper.getIDS().getType()).equals("network"))
 				{
 					trainingInterfaceNet = new TrainInterfaceNetwork();
@@ -257,13 +243,12 @@ public class IDSWrapperVisualInterface extends Thread {
 			selectOutputTypeLabel.setForeground(SWTResourceManager.getColor(19, 139, 11));
 			selectOutputTypeLabel.setText("Output types selected");
 			
-			//	Abilito i pulsanti che consentono la configurazione, l'analisi e l'addestramento dell'IDS
+			//	enable the configuration buttons
 			idsConfigurationButton.setEnabled(true);
 			analysisConfigurationButton.setEnabled(true);
-			//	Abilito il tasto di addestramento solo se l'IDS è di tipo anomaly based
+			//	enable the training button only if the selected ids type is "anomaly based"
 			if(selectedIds.getIdsParadigm().equals("anomaly"))
 				trainTheIdsButton.setEnabled(true);
-	//	INSERIRE QUI IL CODICE CHE CONSENTE DI PROCEDERE CON L'UTILIZZO DELL'IDSWRAPPER CONFIGURATO
 		}
 	}
 
@@ -276,7 +261,6 @@ public class IDSWrapperVisualInterface extends Thread {
 	@SuppressWarnings("unchecked")
 	public void readInputHandlerFromInterface(ArrayList inHandlerList)
 	{
-	//	System.out.println("Lunghezza vettore input: "+inHandlerList.size());
 		for(int i=0;i<inHandlerList.size();i++)
 		{
 			idsWrapper.selectInputType(InputHandler.class.cast(inHandlerList.get(i)));
@@ -286,7 +270,6 @@ public class IDSWrapperVisualInterface extends Thread {
 	@SuppressWarnings("unchecked")
 	public void readOutputHandlerFromInterface(ArrayList outHandlerList)
 	{
-	//	System.out.println("Lunghezza vettore input: "+inHandlerList.size());
 		for(int i=0;i<outHandlerList.size();i++)
 		{
 			idsWrapper.selectOutputType(OutputHandler.class.cast(outHandlerList.get(i)));
