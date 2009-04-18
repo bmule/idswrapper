@@ -48,19 +48,26 @@ public class Ulisse
 	extends IDS 
 {
 	
-	@SuppressWarnings("unchecked")
-		public Ulisse(String IDSpath, String IDSversion, ArrayList input,
-			ArrayList output)
-		{
-			path = IDSpath;
-			type = "network";
-			name = "Ulisse";
-			inputFormat = input;
-			outputFormat = output;
-			version = IDSversion;
-			idsParadigm = "anomaly";
-			ruleManager = new UlisseRM();
-		}
+	@SuppressWarnings("unchecked") 
+	public Ulisse()
+	{
+		path = "";
+		type = "network";
+		name = "Ulisse";
+		inputFormat = new ArrayList();
+			inputFormat.add("pcap");
+			inputFormat.add("othertype");
+		outputFormat = new ArrayList();
+			outputFormat.add("IDMEF");
+		version = "1.0";
+		idsParadigm = "anomaly";
+		ruleManager = new UlisseRM();
+	}
+	
+	public void setPath(String IDSpath)
+	{
+		path = IDSpath;
+	}
 
 	public UlisseRM RuleManager()
 	{
