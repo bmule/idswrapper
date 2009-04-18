@@ -38,16 +38,23 @@ public class Snort
 	extends IDS 
 {
 	@SuppressWarnings("unchecked")
-	public Snort(String IDSpath, String IDSversion, ArrayList input, ArrayList output)
+	public Snort()
 	{
-		path = IDSpath;
+		path = "";
 		type = "network";
 		name = "Snort";
-		inputFormat = input;
-		outputFormat = output;
-		version = IDSversion;
+		inputFormat = new ArrayList();
+			inputFormat.add("pcap");
+		outputFormat = new ArrayList();
+			outputFormat.add("IDMEF");
+		version = "2.3.2";
 		idsParadigm = "misuse";
 		ruleManager = new SnortRM();
+	}
+	
+	public void setPath(String IDSpath)
+	{
+		path = IDSpath;
 	}
 
 	public SnortRM RuleManager()
