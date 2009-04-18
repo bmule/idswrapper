@@ -49,7 +49,6 @@ public abstract class IDS
 	protected String idsParadigm;
 	protected RulesManager ruleManager;
 
-	//	Attributo legato all'interfaccia di testing specifica per ogni IDS
 	protected IDSTestingInterface testingInterface;
 	
 	//	getters and setters
@@ -124,7 +123,6 @@ public abstract class IDS
 		this.idsParadigm = idsParadigm;
 	}
 
-	//	Metodi per la configurazione e l'utilizzo di un IDS generico.
 	public void configureIDS()
 	{
 		
@@ -173,6 +171,34 @@ public abstract class IDS
 	public IDSTestingInterface getTestingInterface(String str)
 	{
 		return testingInterface;
+	}
+	
+	public String getStringListInputFormat()
+	{
+		String strList = "";
+		
+		for(int i=0; i<inputFormat.size(); i++)
+		{
+			if(i!=0)
+				strList = strList + ", ";
+			strList = strList + inputFormat.get(i);
+		}
+		
+		return strList;
+	}
+	
+	public String getStringListOutputFormat()
+	{
+		String strList = "";
+		
+		for(int i=0; i<outputFormat.size(); i++)
+		{
+			if(i!=0)
+				strList = strList + ", ";
+			strList = strList + outputFormat.get(i);
+		}
+		
+		return strList;
 	}
 	
 }
