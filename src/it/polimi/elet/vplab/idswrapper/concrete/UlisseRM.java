@@ -26,7 +26,6 @@
 package it.polimi.elet.vplab.idswrapper.concrete;
 
 import it.polimi.elet.vplab.idswrapper.ids.RulesManager;
-import it.polimi.elet.vplab.idswrapper.filemanager.FileManager;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -38,7 +37,6 @@ import java.util.Scanner;
 public class UlisseRM
 	extends RulesManager
 {
-	FileManager fmanager;
 	
 	public UlisseRM()
 	{
