@@ -29,6 +29,7 @@ import it.polimi.elet.vplab.idswrapper.ids.IDS;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.util.List;
 
 /**
  * This class is called from IDSSelectionInterface interface.
@@ -43,20 +44,21 @@ import java.util.StringTokenizer;
 public class IDSCreator 
 {
 	IDS ids;
-
-	public IDS createIDSIstance(ArrayList alist, int selectedIndex, String IDSpath)
+	
+	public IDS createIDSIstance(IDS ids, String IDSpath)
 	{
 		IDS IDS = null;
 
-		if ((((ArrayList)(alist.get(selectedIndex))).get(0)).toString().equals("Snort")) {
-			IDS = new it.polimi.elet.vplab.idswrapper.concrete.Snort(IDSpath,
-				((((ArrayList)(alist.get(selectedIndex))).get(1)).toString()),
-				stringListToArray((((ArrayList)(alist.get(selectedIndex))).get(4)).
-				toString()),stringListToArray((((ArrayList)(alist.get(selectedIndex))).
-				get(5)).toString()));
+		if(ids.getName().equals("Snort")) 
+		{
+			IDS = ids;
+			IDS.setPath(IDSpath);
 			IDS.newCommandLineAnalysis();
-		} else if ((((ArrayList)(alist.get(selectedIndex))).get(0)).toString().equals("Ulisse")) {
-			IDS = new it.polimi.elet.vplab.idswrapper.concrete.Ulisse(IDSpath, ((((ArrayList)(alist.get(selectedIndex))).get(1)).toString()), stringListToArray((((ArrayList)(alist.get(selectedIndex))).get(4)).toString()),stringListToArray((((ArrayList)(alist.get(selectedIndex))).get(5)).toString()));
+		} 
+		else if(ids.getName().equals("Ulisse")) 
+		{
+			IDS = ids;
+			IDS.setPath(IDSpath);
 			IDS.newCommandLineAnalysis();
 			IDS.newCommandLineTraining();
 		}
@@ -64,7 +66,8 @@ public class IDSCreator
 		return IDS;
 
 	}
-
+	
+	@SuppressWarnings("unused")
 	private ArrayList stringListToArray(String strList)
 	{
 		ArrayList alist = new ArrayList();
@@ -76,5 +79,17 @@ public class IDSCreator
 		}
 
 		return alist;
+	}
+	
+	public List<IDS> getImplementedIDSList()
+	{
+		List idsList = new ArrayList();
+		Snort snort = new Snort();
+		Ulisse ulisse = new Ulisse();
+		
+		idsList.add(snort);
+		idsList.add(ulisse);
+		
+		return idsList;
 	}
 }
