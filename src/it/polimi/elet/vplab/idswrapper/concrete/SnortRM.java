@@ -25,7 +25,6 @@
  */
 package it.polimi.elet.vplab.idswrapper.concrete;
 
-import it.polimi.elet.vplab.idswrapper.filemanager.FileManager;
 import it.polimi.elet.vplab.idswrapper.ids.RulesManager;
 
 import java.io.FileNotFoundException;
@@ -39,8 +38,6 @@ import java.util.Scanner;
 public class SnortRM
 	extends RulesManager
 {
-
-	FileManager fmanager;
 	
 	public SnortRM()
 	{
