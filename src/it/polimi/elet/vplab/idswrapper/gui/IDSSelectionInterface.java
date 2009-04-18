@@ -41,7 +41,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import it.polimi.elet.vplab.idswrapper.concrete.IDSCreator;
-import it.polimi.elet.vplab.idswrapper.filemanager.FileManager;
+import it.polimi.elet.vplab.idswrapper.ids.IDS;
 
 import com.swtdesigner.SWTResourceManager;
 
@@ -54,12 +54,10 @@ public class IDSSelectionInterface{
 	private boolean selectionDone = false;
 	private IDSWrapperVisualInterface mainInterface;
 	Label fileAccessReportLabel; 
-	private FileManager fmanager = new FileManager();
-	boolean fileLoaded = false;
+
 	ListViewer listViewer;
 	Button confirmButton;
-	@SuppressWarnings("unchecked")
-	ArrayList alist;
+	ArrayList<IDS> idsList;
 	int selectedIndex = 0;
 	String IDSpath = "";
 	
@@ -147,7 +145,7 @@ public class IDSSelectionInterface{
 				
 				//	call of the IDS creatore method
 				IDSCreator idsCreator = new IDSCreator();
-				mainInterface.readIDSFromInterface(idsCreator.createIDSIstance(alist, selectedIndex, IDSpath));
+				mainInterface.readIDSFromInterface(idsCreator.createIDSIstance(idsList.get(selectedIndex), IDSpath));
 				
 			}
 		});
@@ -199,39 +197,30 @@ public class IDSSelectionInterface{
 		loadData();
 	}
 	
-	@SuppressWarnings("unchecked")
 	private boolean loadData()
 	{
-		alist = ArrayList.class.cast(fmanager.readIDSFile());
-		if(alist.size() > 0)
-			{
-				fileAccessReportLabel.setForeground(SWTResourceManager.getColor(19, 139, 11));
-				fileAccessReportLabel.setText("IDS.txt file has been loaded");
-				fileLoaded = true;
-
-				for(int k=0;k<alist.size();k++)
-				{
-					comboIDSSelection.add((((ArrayList)(alist.get(k))).get(0)).toString());
-				}
-			}
-		else
-			{
-				fileAccessReportLabel.setForeground(SWTResourceManager.getColor(255, 0, 0));
-				fileAccessReportLabel.setText("Error: cannot find IDS.txt file");	
-			}
+		IDSCreator creator = new IDSCreator();
+		idsList = (ArrayList<IDS>) creator.getImplementedIDSList();
 		
-		return fileLoaded;
+		if(idsList.size()==0)
+			return false;
+		
+		for(int k=0;k<idsList.size();k++)
+		{
+			comboIDSSelection.add(((IDS)idsList.get(k)).getName());
+		}
+		
+		return true;
 	}
 	
-	@SuppressWarnings("unchecked")
 	private void writeReport()
 	{
-			list.add("Name: "+(((ArrayList)(alist.get(selectedIndex))).get(0)).toString()+"     Version: "+(((ArrayList)(alist.get(selectedIndex))).get(1)).toString());
-			list.add("Type: "+(((ArrayList)(alist.get(selectedIndex))).get(2)).toString());
-			list.add("Paradigm: "+(((ArrayList)(alist.get(selectedIndex))).get(3)).toString());
-			list.add("File system path: "+textIDSPath.getText());
-			list.add("Supported input format: "+(((ArrayList)(alist.get(selectedIndex))).get(4)).toString());
-			list.add("Supported output format: "+(((ArrayList)(alist.get(selectedIndex))).get(5)).toString());
+		list.add("Name: "+((IDS)idsList.get(selectedIndex)).getName()+"     Version: "+((IDS)idsList.get(selectedIndex)).getVersion());
+		list.add("Type: "+((IDS)idsList.get(selectedIndex)).getType());
+		list.add("Paradigm: "+((IDS)idsList.get(selectedIndex)).getIdsParadigm());
+		list.add("File system path: "+textIDSPath.getText());
+		list.add("Supported input format: "+((IDS)idsList.get(selectedIndex)).getStringListInputFormat());
+		list.add("Supported output format: "+((IDS)idsList.get(selectedIndex)).getStringListOutputFormat());
 	}
 	
 
