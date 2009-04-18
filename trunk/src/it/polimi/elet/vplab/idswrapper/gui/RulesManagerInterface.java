@@ -43,8 +43,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
-import it.polimi.elet.vplab.idswrapper.filemanager.FileManager;
-
 import com.swtdesigner.SWTResourceManager;
 
 public class RulesManagerInterface {
@@ -204,7 +202,7 @@ public class RulesManagerInterface {
 		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(final SelectionChangedEvent arg0) 
 			{
-				//	Evento di selezione di una riga di tableViewer
+				//	selection event of the tableViewer row
 				int selectedIndex = table.getSelectionIndex();
 				ruleText.setText(table.getItem(selectedIndex).getText());
 				kindOfActionLabel.setText("Viewing a rule...");
@@ -285,12 +283,10 @@ public class RulesManagerInterface {
 				
 				if(workMode.equals("Change"))
 				{
-					//	eseguire le operazioni di modifica
-					FileManager fm = new FileManager();		
-					
+					//	modify operations
 					if(!ruleText.getText().equals(""))
 					{
-						if(fm.changeARule(rulesFilePathText.getText(), table.getItem(table.getSelectionIndex()).getText(), editedRule))
+						if(mainInterface.getIDS().getRulesManager().changeARule(rulesFilePathText.getText(), table.getItem(table.getSelectionIndex()).getText(), editedRule))
 						{
 							ruleText.setText("");
 							updateInterface();
@@ -308,11 +304,10 @@ public class RulesManagerInterface {
 				}
 				else if(workMode.equals("New"))
 				{
-					//	eseguire le operazioni di inserimento della nuova regola
-					FileManager fm = new FileManager();
+					//	insert a new rule
 					if(!ruleText.getText().equals(""))
 					{
-						if(fm.insertNewRule(rulesFilePathText.getText(), editedRule))
+						if(mainInterface.getIDS().getRulesManager().insertNewRule(rulesFilePathText.getText(), editedRule))
 						{
 							ruleText.setText("");
 							updateInterface();
@@ -330,10 +325,8 @@ public class RulesManagerInterface {
 				}
 				else if(workMode.equals("Remove"))
 				{
-					//	eseguire le operazioni di eliminazione della nuova regola
-					FileManager fm = new FileManager();
-					
-					if(fm.changeARule(rulesFilePathText.getText(), table.getItem(table.getSelectionIndex()).getText(), ""))
+					//	delete a rule
+					if(mainInterface.getIDS().getRulesManager().changeARule(rulesFilePathText.getText(), table.getItem(table.getSelectionIndex()).getText(), ""))
 					{
 						ruleText.setText("");
 						updateInterface();
@@ -374,23 +367,20 @@ public class RulesManagerInterface {
 	
 	private void updateInterface()
 	{
-		FileManager fmanager = new FileManager();
-		boolean fileFound = fmanager.loadRuleFile(rulesFilePathText.getText());
+		boolean fileFound = mainInterface.getIDS().getRulesManager().loadRuleFile(rulesFilePathText.getText());
 		
-		//	Elimino i dati vecchi dall'interfaccia
+		//	delete old data from interface
 		table.removeAll();
 		ruleText.setText("");
 		kindOfActionLabel.setText("");
 		
-		//	Controllo che il file selezionato esista
+		//	check if rule file exists
 		if(fileFound)
 			{
 				responseLabel.setText("Rules file found");
 				responseLabel.setForeground(SWTResourceManager.getColor(19, 139, 11));
-				//	Il file esiste, carico le regole che vi sono contenute (carica solo le regole coerenti con 
-				//	l'IDS selezionato)
+				//	load the rules
 				rulesList = mainInterface.getIDS().getRulesManager().loadRules(rulesFilePathText.getText());
-				//	Inserisco i dati presenti in rulesList all'interno della tabella di visualizzazione
 				for (int i = 0; i < rulesList.size(); i++) 
 			    {
 					TableItem item = new TableItem(table, SWT.NONE);
@@ -406,8 +396,7 @@ public class RulesManagerInterface {
 	
 	private String handleWritedRule(String writedRule)
 	{
-		//	Questo metodo elimina i caratteri di newline ("\n"), per compattare la nuova regola inserita o modificata
-		//	e per fare in modo che le funzioni di sostituzione di stringhe della classe FileManager funzionino correttamente
+		//	delete the newline ("/n") chars 
 		String handledRule;
 		
 		handledRule = writedRule.replaceAll("\n", "");
